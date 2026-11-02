@@ -219,6 +219,22 @@
         <h2 data-i18n="h_outside">Outside work</h2>
         <p data-i18n="outside">I paint, illustrate and read about art. I hike, go to museums, and rate cafés
           between classes.</p>
+
+        <!-- Coffee corner: the steam puffs in 3 stop-motion frames while it's on screen;
+             tapping the cup picks one of my favourite Budapest cafés (list in script.js). -->
+        <div class="coffee">
+          <button type="button" class="cup-btn" data-i18n-attr="aria-label:coffee_aria" aria-label="Pick a café for me">
+            <svg class="cup" viewBox="0 0 80 80" aria-hidden="true">
+              <path class="steam s1" d="M30 26c-4-4 4-7 0-12M42 26c-4-5 5-8 0-14"/>
+              <path class="steam s2" d="M31 27c4-4-4-7 1-12M43 27c4-4-5-8 0-13"/>
+              <path class="steam s3" d="M29 25c-3-5 5-6 1-11M41 26c-5-4 4-9 1-14"/>
+              <path d="M18 34h44c0 16-8 26-22 26S18 50 18 34z" class="cup-body"/>
+              <path d="M62 38c7 0 9 4 8 7s-4 6-10 6"/>
+              <path d="M10 64c6 4 16 6 30 6s24-2 30-6"/>
+            </svg>
+          </button>
+          <p class="coffee-tip" aria-live="polite"><span data-i18n="coffee_prompt">Tap the cup for today's café pick.</span></p>
+        </div>
       </div>
     </section>
 

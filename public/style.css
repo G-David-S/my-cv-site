@@ -216,6 +216,29 @@ html:not(.js) .lock-card { display: none; }
 .cookie [data-from] { visibility: hidden; }
 .cookie [data-from].on { visibility: visible; }
 
+/* ---------- Coffee corner ---------- */
+.coffee { display: flex; align-items: center; margin-top: 4px; }
+.cup-btn {
+  flex: none; width: 64px; height: 64px; padding: 0; margin-right: 12px; cursor: pointer;
+  background: none; border: 1px dashed var(--line); border-radius: 50%; color: var(--accent);
+}
+.cup-btn:hover { border-color: var(--accent); }
+.cup { width: 52px; height: 52px; overflow: visible; }
+.cup path { fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.cup .cup-body { fill: var(--surface); }
+.cup .steam { opacity: .7; }
+.cup .s2, .cup .s3 { opacity: 0; }
+/* Steam "boils" through 3 hand-drawn frames, only while on screen */
+.coffee.steaming .steam { animation: steam 1.2s steps(1) infinite; }
+.coffee.steaming .s2 { animation-delay: -.8s; }
+.coffee.steaming .s3 { animation-delay: -.4s; }
+@keyframes steam { 0% { opacity: .7; } 33.33% { opacity: 0; } }
+.cup-btn.hop .cup { animation: hop .36s steps(3) 1; }
+@keyframes hop { 33% { transform: translateY(-6px) rotate(-6deg); } 66% { transform: translateY(-3px) rotate(5deg); } }
+.coffee-tip { margin: 0; font-size: .95rem; color: var(--muted); }
+.coffee-tip strong { color: var(--text); }
+.coffee-tip a { margin-left: 2px; font-size: .88rem; }
+
 .print-only { display: none; }
 .footer { text-align: center; font-size: .85rem; color: var(--muted); padding: 32px 16px 48px; border-top: 1px solid var(--line); }
 
@@ -318,7 +341,7 @@ html:not(.js) .scrub [data-from]:not([data-to]) { visibility: visible; }
   .stat { padding: 6px 12px; }
   .stat-num { font-size: 15pt; }
   .stat-label { font-size: 9pt; }
-  .flower, .paint-frame, .hidden-digit, .lock-card { display: none !important; }
+  .flower, .paint-frame, .hidden-digit, .lock-card, .coffee { display: none !important; }
   .hero, .cv-cols { display: block; }
   .hero-side .stat { display: inline-flex; padding: 6px 12px; }
   .hero-side .stat-num { display: inline; font-size: 15pt; margin: 0 12px 0 0; }

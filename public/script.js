@@ -54,6 +54,7 @@ function setLang(next) {
   toggle.lang = lang === "hu" ? "en" : "hu";
   toggle.setAttribute("aria-label", lang === "hu" ? "English version" : "Magyar nyelvű változat");
   document.querySelectorAll(".count").forEach((el) => { el.textContent = formatNumber(+el.dataset.to); });
+  if (typeof renderCoffee === "function") renderCoffee();
 }
 function formatNumber(n) {
   // 600,000 in English, 600 000 in Hungarian
@@ -179,6 +180,59 @@ if (spots.length === 4 && lockCard) {
       if (e.key === "ArrowDown") { e.preventDefault(); turn(dial, -1); }
     });
   });
+}
+
+// ---------- Coffee corner ----------
+// My favourite Budapest cafés. Tapping the cup picks a different one each time.
+const CAFES = [
+  "Meron Coffee", "Fekete", "Kontakt", "Cause x Salt Bakery", "Kelet", "Caphé", "Nor/ma",
+  "Nor/ma Grand", "My Green Cup", "6letter", "Artizán", "Coffee Embassy", "Montage", "Dériné",
+  "4minutes coffee"
+];
+const COFFEE_LINES = {
+  en: ["Today's pick: {c}.", "Between classes? Try {c}.", "Grab a seat at {c}.", "Coffee break at {c}, on me (in spirit).", "Tested and approved: {c}."],
+  hu: ["A mai tipp: {c}.", "Két óra között? Próbáld ki: {c}.", "Ülj be ide: {c}.", "Kávészünet itt: {c}, én állom (gondolatban).", "Kipróbálva, jóváhagyva: {c}."]
+};
+// var (not let): setLang() can call renderCoffee() before this line has run
+var cafe = -1;
+var cafeLine = 0;
+function renderCoffee() {
+  const tip = document.querySelector(".coffee-tip");
+  if (!tip || !(cafe >= 0)) return;
+  const name = CAFES[cafe];
+  const line = COFFEE_LINES[lang][cafeLine].split("{c}");
+  const map = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(name + " Budapest");
+  tip.textContent = "";
+  tip.appendChild(document.createTextNode(line[0]));
+  const strong = document.createElement("strong");
+  strong.textContent = name;
+  tip.appendChild(strong);
+  tip.appendChild(document.createTextNode(line[1] + " "));
+  const link = document.createElement("a");
+  link.href = map; link.target = "_blank"; link.rel = "noopener";
+  link.textContent = lang === "hu" ? "Térkép →" : "Map →";
+  tip.appendChild(link);
+}
+const coffee = document.querySelector(".coffee");
+if (coffee) {
+  const cupBtn = coffee.querySelector(".cup-btn");
+  cupBtn.addEventListener("click", () => {
+    let next;
+    do { next = Math.floor(Math.random() * CAFES.length); } while (next === cafe);
+    cafe = next;
+    cafeLine = Math.floor(Math.random() * COFFEE_LINES.en.length);
+    renderCoffee();
+    // restart the little hop
+    cupBtn.classList.remove("hop");
+    void cupBtn.offsetWidth;
+    cupBtn.classList.add("hop");
+  });
+  // Steam only moves while the cup is on screen, to save battery
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    new IntersectionObserver((entries) => {
+      coffee.classList.toggle("steaming", entries[0].isIntersecting);
+    }).observe(coffee);
+  }
 }
 
 const blocks = document.querySelectorAll(".reveal");

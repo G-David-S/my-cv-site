@@ -49,5 +49,7 @@ window.I18N_HU = {
   lock_title: "Kis rejtvény",
   lock_hint: "Négy halvány szám bújik meg az oldalon. Olvasd össze őket fentről lefelé, majd koppints a tárcsákra.",
   lock_won: "Kinyílt! Itt egy süti a felfedezésért.",
+  coffee_aria: "Válassz nekem egy kávézót",
+  coffee_prompt: "Koppints a csészére a mai kávézóajánlóért.",
   footer: "© 2026 Gulyás Dávid Sámuel · Kódoló ügynökkel építve, Firebase-en · <a href=\"https://github.com/G-David-S/my-cv-site\" target=\"_blank\" rel=\"noopener\">forráskód</a>"
 };

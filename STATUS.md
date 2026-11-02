@@ -5,6 +5,7 @@
 - English + Hungarian (HU/EN button), dark mode, PDF CV in both languages, QR code, link preview, 404 page.
 - Two stop-motion drawings that follow scrolling: a frame around the ArAt picture, a flower above the contact.
 - Wide-screen layout (two-column hero, Experience + Education side by side) and a code-lock game: 4 faint random digits on the page open a lock that draws a cookie.
+- Coffee corner under "Outside work": steaming cup; tap it for a random favourite Budapest café (list at the top of the coffee code in public/script.js).
 - Handed in as Vibe Coding Class homework 4 on 2026-11-02 14:16.
 
 ## Where we are
