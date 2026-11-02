@@ -5,7 +5,7 @@ My personal CV page: **Gulyás Dávid Sámuel**, artist, builder and problem sol
 - Live (Firebase Hosting): https://cv-gulyas-david.web.app
 - Mirror (GitHub Pages): https://g-david-s.github.io/my-cv-site/
 
-![Preview](public/assets/preview.png)
+![Screenshot of the live site](docs/screenshot.png)
 
 Built for Lesson 4 of the Vibe Coding Class (2026 autumn) with a coding agent.
 Plain HTML and CSS, plus a little JavaScript for dark mode, scroll animations and the email link.
