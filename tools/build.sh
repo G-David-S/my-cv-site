@@ -11,9 +11,12 @@ trap 'kill $SERVER' EXIT
 sleep 1
 
 "$CHROME" --headless=new --disable-gpu --no-pdf-header-footer --virtual-time-budget=5000 \
-  --print-to-pdf=public/cv-gulyas-david-samuel.pdf http://localhost:8131/ 2>/dev/null
+  --print-to-pdf=public/cv-gulyas-david-samuel.pdf "http://localhost:8131/?lang=en" 2>/dev/null
+
+"$CHROME" --headless=new --disable-gpu --no-pdf-header-footer --virtual-time-budget=5000 \
+  --print-to-pdf=public/cv-gulyas-david-samuel-hu.pdf "http://localhost:8131/?lang=hu" 2>/dev/null
 
 "$CHROME" --headless=new --disable-gpu --hide-scrollbars --window-size=1200,630 --virtual-time-budget=5000 \
   --allow-file-access-from-files --screenshot=public/assets/preview.png "file://$PWD/tools/preview.html" 2>/dev/null
 
-echo "Done: public/cv-gulyas-david-samuel.pdf and public/assets/preview.png"
+echo "Done: public/cv-gulyas-david-samuel.pdf, public/cv-gulyas-david-samuel-hu.pdf and public/assets/preview.png"

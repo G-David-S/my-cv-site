@@ -1,0 +1,63 @@
+<!doctype html>
+<!-- Shown for any address that doesn't exist. Self-contained (no outside files),
+     so it also works on GitHub Pages, where the site lives under /my-cv-site/. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found · Gulyás Dávid Sámuel</title>
+  <meta name="robots" content="noindex">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg: #f4ecdc; --text: #141c3d; --muted: #4c5478; --accent: #1f2a6b; --accent-text: #f4ecdc; --line: #ddd0b6; color-scheme: light; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0f1633; --text: #f1e8d6; --muted: #b9b3c9; --accent: #e9dcc0; --accent-text: #141c3d; --line: #2b366a; color-scheme: dark; }
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0; display: flex; align-items: center; justify-content: center; text-align: center;
+      background: var(--bg); color: var(--text); font: 400 1.05rem/1.6 Inter, system-ui, sans-serif; padding: 24px 16px;
+    }
+    .frame { max-width: 460px; }
+    .art { width: 220px; height: 150px; margin: 0 auto 8px; }
+    .art path, .art rect, .art circle { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    /* The empty picture frame wobbles in 3 stop-motion frames, a few times, then rests */
+    .art { animation: wobble 1.1s steps(3) 3; }
+    @keyframes wobble { 33% { transform: rotate(-2deg); } 66% { transform: rotate(2deg); } }
+    .spark { transform-origin: 170px 38px; animation: turn 1.6s steps(8) 2; }
+    .spark path { fill: var(--accent); stroke: none; }
+    @keyframes turn { to { transform: rotate(180deg); } }
+    .code { font: 600 4.5rem/1 Fraunces, Georgia, serif; letter-spacing: .04em; margin: 0 0 8px; }
+    h1 { font: 600 1.5rem/1.25 Fraunces, Georgia, serif; margin: 0 0 8px; }
+    p { margin: 0 0 4px; color: var(--muted); }
+    .hu { margin-top: 20px; font-size: .95rem; }
+    a.btn {
+      display: inline-block; margin-top: 24px; padding: .7em 1.4em; border-radius: 999px;
+      background: var(--accent); color: var(--accent-text); text-decoration: none; font-weight: 500;
+    }
+    @media (prefers-reduced-motion: reduce) { .art, .spark { animation: none; } }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <svg class="art" viewBox="0 0 220 150" aria-hidden="true">
+      <!-- a hand-drawn, empty picture frame on a nail -->
+      <path d="M110 12 L68 48 M110 12 L152 48"/>
+      <circle cx="110" cy="10" r="3"/>
+      <rect x="40" y="48" width="140" height="96" rx="4"/>
+      <rect x="54" y="62" width="112" height="68" rx="2"/>
+      <path d="M70 116 q12 -18 24 -6 t26 -10" opacity=".45"/>
+      <g class="spark"><path d="M170 24c.5 4 1 6.5 1.9 7.4s3.4 1.4 7.4 1.9c-4 .5-6.5 1-7.4 1.9s-1.4 3.4-1.9 7.4c-.5-4-1-6.5-1.9-7.4s-3.4-1.4-7.4-1.9c4-.5 6.5-1 7.4-1.9s1.4-3.4 1.9-7.4z"/></g>
+    </svg>
+    <p class="code">404</p>
+    <h1>This page wandered off the wall.</h1>
+    <p>The address may be mistyped, or the page has moved.</p>
+    <p class="hu" lang="hu">Ez az oldal lesétált a falról. Lehet, hogy elírtad a címet, vagy az oldal elköltözött.</p>
+    <a class="btn" id="home" href="/">Back to the CV · Vissza az önéletrajzhoz</a>
+  </main>
+  <script>
+    // On GitHub Pages the site lives under /my-cv-site/, everywhere else at /
+    if (/github\.io$/.test(location.hostname)) document.getElementById("home").href = "/my-cv-site/";
+  </script>
+</body>
+</html>
