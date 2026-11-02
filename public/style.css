@@ -52,7 +52,7 @@ svg .dot { fill: currentColor; }
   position: sticky; top: 0; z-index: 10;
   display: flex; justify-content: space-between; align-items: center;
   padding: 12px 16px;
-  padding: 12px max(16px, calc((100% - 960px) / 2));
+  padding: 12px max(16px, calc((100% - 1200px) / 2));
   background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
@@ -77,8 +77,10 @@ svg .dot { fill: currentColor; }
 }
 
 /* Layout */
-main { max-width: 960px; margin: 0 auto; padding: 0 16px; }
-.hero { padding: 40px 0 40px; padding: clamp(28px, 5vw, 56px) 0 40px; max-width: 760px; }
+main { max-width: 1232px; margin: 0 auto; padding: 0 16px; }
+.hero { padding: 40px 0 40px; padding: clamp(28px, 5vw, 56px) 0 40px; }
+.hero-text { max-width: 780px; }
+.hero-side { margin-top: 28px; }
 .eyebrow { display: flex; align-items: center; text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; font-weight: 600; color: var(--muted); margin-bottom: .75em; }
 .lead { font: 400 1.35rem/1.45 Fraunces, serif; font-size: clamp(1.25rem, 2.6vw, 1.55rem); }
 .section { padding: 48px 0; border-top: 1px solid var(--line); }
@@ -100,8 +102,7 @@ main { max-width: 960px; margin: 0 auto; padding: 0 16px; }
 .profiles .chip { margin: 5px; }
 a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
-/* Numbers */
-.stats { margin: 0 0 40px; }
+/* Number */
 .stat {
   display: inline-flex; align-items: baseline; padding: 14px 22px;
   background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
@@ -152,10 +153,12 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
 .contact-actions { display: flex; flex-wrap: wrap; justify-content: center; margin: 15px -5px 0; }
 .contact-actions .btn { margin: 5px; }
 
-/* QR card: quiet, in the theme colors; only where scanning makes sense */
+/* QR card and the lock game sit side by side under the contact buttons */
+.extras { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; margin: 36px -10px 0; }
+.extras > * { margin: 10px; }
 .qr-card {
   display: inline-flex; align-items: center; text-align: left;
-  margin: 36px auto 0; padding: 14px 20px 14px 14px;
+  padding: 14px 20px 14px 14px;
   border: 1px dashed var(--line); border-radius: 16px;
 }
 /* Always dark-on-light, so every phone camera can read it, in both themes */
@@ -168,6 +171,50 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
 }
 .qr-card figcaption { font-size: .88rem; color: var(--muted); max-width: 190px; }
 .qr-card strong { display: block; font: 600 1.05rem Fraunces, serif; color: var(--text); margin-bottom: 2px; }
+
+/* ---------- Little game: hidden numbers + code lock ---------- */
+.hidden-digit {
+  position: absolute; z-index: 1; pointer-events: none; user-select: none;
+  font: 600 90px/1 Fraunces, Georgia, serif; color: var(--accent); opacity: .13;
+}
+[data-digit-spot] { position: relative; }
+
+.lock-card {
+  display: inline-flex; align-items: center; text-align: left; position: relative;
+  padding: 14px 20px 14px 16px; border: 1px dashed var(--line); border-radius: 16px;
+}
+html:not(.js) .lock-card { display: none; }
+.lock { flex: none; width: 132px; margin-right: 16px; }
+.shackle { display: block; width: 66px; height: 40px; margin: 0 auto -2px; overflow: visible; transition: transform .3s steps(3); }
+.shackle path { fill: none; stroke: var(--accent); stroke-width: 7; stroke-linecap: round; }
+.lock[data-state="open"] .shackle { transform: translate(17px, -12px) rotate(14deg); }
+.lock-body {
+  display: flex; justify-content: space-between; padding: 14px 10px;
+  border: 2.5px solid var(--accent); border-radius: 14px; background: var(--surface);
+}
+.dial {
+  width: 24px; height: 34px; padding: 0; border: 1.5px solid var(--line); border-radius: 6px;
+  background: var(--bg); color: var(--text); cursor: pointer;
+  font: 600 1.15rem/1 Fraunces, Georgia, serif; font-variant-numeric: tabular-nums;
+}
+.dial:hover { border-color: var(--accent); }
+.lock[data-state="open"] .dial { border-color: var(--accent); color: var(--accent); }
+.lock-text { max-width: 210px; font-size: .88rem; color: var(--muted); }
+.lock-text strong { display: block; font: 600 1.05rem Fraunces, serif; color: var(--text); margin-bottom: 2px; }
+.lock-won { display: none; color: var(--text); }
+.lock-card.won .lock-hint { display: none; }
+.lock-card.won .lock-won { display: block; }
+.cookie { display: none; width: 76px; height: 76px; margin-left: 12px; flex: none; overflow: visible; }
+.lock-card.won .cookie { display: block; }
+@media (max-width: 520px) {
+  .lock-card { flex-wrap: wrap; }
+  .lock-card .cookie { margin: 12px auto 0; }
+}
+.cookie path { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.cookie path:first-child { fill: var(--surface); }
+.cookie .chip { fill: var(--accent); stroke: none; }
+.cookie [data-from] { visibility: hidden; }
+.cookie [data-from].on { visibility: visible; }
 
 .print-only { display: none; }
 .footer { text-align: center; font-size: .85rem; color: var(--muted); padding: 32px 16px 48px; border-top: 1px solid var(--line); }
@@ -223,6 +270,24 @@ html:not(.js) .scrub [data-from]:not([data-to]) { visibility: visible; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
 }
 
+/* Wide screens: use the room. Hero in two columns, Experience and Education side by side. */
+@media (min-width: 1000px) {
+  .hero { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(250px, 1fr); grid-gap: 64px; align-items: center; }
+  .hero-side { margin-top: 0; }
+  .hero-side .stat { display: block; padding: 28px 30px; }
+  .hero-side .stat-num { display: block; font-size: 3.4rem; margin: 0 0 8px; }
+  .hero-side .stat-label { font-size: 1.05rem; }
+  .cv-cols { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 64px; }
+  .cv-cols .timeline li { grid-template-columns: 112px 1fr; }
+  .cv-cols .school { padding: 20px; }
+  .cv-cols .school-logo { width: 120px; height: 45px; margin-right: 18px; }
+  .project { grid-template-columns: 1.35fr 1fr; }
+  .project-body { padding: 36px; }
+}
+@media (min-width: 1400px) {
+  html { font-size: 106.25%; }
+}
+
 /* Phones */
 @media (max-width: 720px) {
   .project, .two-col { grid-template-columns: 1fr; }
@@ -249,11 +314,15 @@ html:not(.js) .scrub [data-from]:not([data-to]) { visibility: visible; }
   .hero { padding: 0 0 8px; }
   h1 { font-size: 26pt; }
   .lead { font-size: 13pt; }
-  .stats { margin: 0 0 6px; }
+  .hero-side { margin-top: 6px; }
   .stat { padding: 6px 12px; }
   .stat-num { font-size: 15pt; }
   .stat-label { font-size: 9pt; }
-  .flower, .paint-frame { display: none; }
+  .flower, .paint-frame, .hidden-digit, .lock-card { display: none !important; }
+  .hero, .cv-cols { display: block; }
+  .hero-side .stat { display: inline-flex; padding: 6px 12px; }
+  .hero-side .stat-num { display: inline; font-size: 15pt; margin: 0 12px 0 0; }
+  .extras { display: block; margin: 0; }
   .section { padding: 12px 0; }
   .section h2 { break-after: avoid; }
   .project, .school, .timeline li, .two-col > div, .contact { break-inside: avoid; }

@@ -45,5 +45,9 @@ window.I18N_HU = {
   qr_aria: "QR-kód, amely megnyitja ezt az oldalt",
   qr_title: "Vidd magaddal",
   qr_text: "Olvasd be, és megnyílik a telefonodon.",
+  dial1: "1. tárcsa", dial2: "2. tárcsa", dial3: "3. tárcsa", dial4: "4. tárcsa",
+  lock_title: "Kis rejtvény",
+  lock_hint: "Négy halvány szám bújik meg az oldalon. Olvasd össze őket fentről lefelé, majd koppints a tárcsákra.",
+  lock_won: "Kinyílt! Itt egy süti a felfedezésért.",
   footer: "© 2026 Gulyás Dávid Sámuel · Kódoló ügynökkel építve, Firebase-en · <a href=\"https://github.com/G-David-S/my-cv-site\" target=\"_blank\" rel=\"noopener\">forráskód</a>"
 };

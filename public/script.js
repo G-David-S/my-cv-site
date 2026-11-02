@@ -130,6 +130,57 @@ if (reduceMotion) {
   updateDrawings();
 }
 
+// ---------- Little game ----------
+// Four random digits are scattered faintly over the page, one per marked area, top to bottom.
+// Set the four dials of the lock to them (tap = +1, arrow keys = up/down) and it opens;
+// then a cookie draws itself in a few stop-motion frames.
+const spots = document.querySelectorAll("[data-digit-spot]");
+const lockCard = document.querySelector(".lock-card");
+if (spots.length === 4 && lockCard) {
+  const code = [1 + Math.floor(Math.random() * 9)]; // first digit never 0, so 0000 never opens it
+  for (let i = 0; i < 3; i++) code.push(Math.floor(Math.random() * 10));
+  for (let i = 0; i < 4; i++) {
+    const digit = document.createElement("span");
+    digit.className = "hidden-digit";
+    digit.setAttribute("aria-hidden", "true");
+    digit.textContent = code[i];
+    digit.style.left = (6 + Math.random() * 80) + "%";
+    digit.style.top = (12 + Math.random() * 60) + "%";
+    digit.style.transform = "rotate(" + Math.round(Math.random() * 30 - 15) + "deg)";
+    spots[i].appendChild(digit);
+  }
+
+  const lock = lockCard.querySelector(".lock");
+  const dials = Array.prototype.slice.call(lockCard.querySelectorAll(".dial"));
+  const cookieParts = Array.prototype.slice.call(lockCard.querySelectorAll(".cookie [data-from]"));
+  let opened = false;
+  const check = () => {
+    if (opened || !dials.every((d, i) => +d.textContent === code[i])) return;
+    opened = true;
+    lock.setAttribute("data-state", "open");
+    lockCard.classList.add("won");
+    dials.forEach((d) => { d.disabled = true; });
+    let frame = 0;
+    const next = () => {
+      frame++;
+      cookieParts.forEach((p) => p.classList.toggle("on", +p.getAttribute("data-from") <= frame));
+      if (frame < 7) setTimeout(next, reduceMotion ? 0 : 140);
+    };
+    setTimeout(next, reduceMotion ? 0 : 300);
+  };
+  const turn = (dial, step) => {
+    dial.textContent = (+dial.textContent + step + 10) % 10;
+    check();
+  };
+  dials.forEach((dial) => {
+    dial.addEventListener("click", () => turn(dial, 1));
+    dial.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowUp") { e.preventDefault(); turn(dial, 1); }
+      if (e.key === "ArrowDown") { e.preventDefault(); turn(dial, -1); }
+    });
+  });
+}
+
 const blocks = document.querySelectorAll(".reveal");
 function show(block) {
   block.classList.add("is-visible");

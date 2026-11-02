@@ -16,7 +16,7 @@ Plain HTML and CSS, plus a little JavaScript for dark mode, scroll animations an
 | --- | --- |
 | `public/index.html` | The page content |
 | `public/style.css` | Look: colours, layout, dark mode, phone layout, print/PDF layout |
-| `public/script.js` | Dark mode, HU/EN switch, number counter, scroll animations, email link |
+| `public/script.js` | Dark mode, HU/EN switch, number counter, scroll-drawn flower/frame, code-lock game, email link |
 | `public/i18n.js` | Hungarian texts (English is in index.html) |
 | `public/404.html` | Page shown for addresses that don't exist |
 | `public/cv-gulyas-david-samuel.pdf`, `-hu.pdf` | Downloadable CV in English and Hungarian (made from the page) |

@@ -4,6 +4,7 @@
 - Live CV page: https://cv-gulyas-david.web.app (copy: https://g-david-s.github.io/my-cv-site/), code on GitHub (G-David-S/my-cv-site).
 - English + Hungarian (HU/EN button), dark mode, PDF CV in both languages, QR code, link preview, 404 page.
 - Two stop-motion drawings that follow scrolling: a frame around the ArAt picture, a flower above the contact.
+- Wide-screen layout (two-column hero, Experience + Education side by side) and a code-lock game: 4 faint random digits on the page open a lock that draws a cookie.
 - Handed in as Vibe Coding Class homework 4 on 2026-11-02 14:16.
 
 ## Where we are
@@ -15,7 +16,7 @@
 - After any text change: `sh tools/build.sh` (new PDFs + preview), commit, push, deploy (commands in README.md).
 
 ## Later
-- Painting gallery, the keypad puzzle idea, a private visit counter.
+- Painting gallery, a private visit counter.
 
 ## How to start
 - Preview locally with the "cv-site" server (port 8130); read README.md for the file map.
