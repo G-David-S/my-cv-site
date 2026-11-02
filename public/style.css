@@ -114,7 +114,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
   display: grid; grid-template-columns: 1.2fr 1fr; overflow: hidden;
   background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow);
 }
-.project-image { display: block; overflow: hidden; }
+.project-image { display: block; overflow: hidden; position: relative; }
 .project-image img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
 .project:hover .project-image img { transform: scale(1.04); }
 .project-body { padding: 28px; }
@@ -168,9 +168,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
 }
 .qr-card figcaption { font-size: .88rem; color: var(--muted); max-width: 190px; }
 .qr-card strong { display: block; font: 600 1.05rem Fraunces, serif; color: var(--text); margin-bottom: 2px; }
-@media (max-width: 720px), (hover: none) and (pointer: coarse) {
-  .qr-card { display: none; }
-}
 
 .print-only { display: none; }
 .footer { text-align: center; font-size: .85rem; color: var(--muted); padding: 32px 16px 48px; border-top: 1px solid var(--line); }
@@ -195,10 +192,31 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
 .flower .leaf { fill: var(--surface); }
 .flower .petal { fill: var(--bg); }
 .flower .heart { fill: var(--accent); stroke: none; }
-.flower [data-from] { visibility: hidden; }
-.flower [data-from].on { visibility: visible; }
-/* Without JavaScript (and in the PDF) the flower is simply in full bloom */
-html:not(.js) .flower [data-from]:not([data-to]) { visibility: visible; }
+.scrub [data-from] { visibility: hidden; }
+.scrub [data-from].on { visibility: visible; }
+/* Without JavaScript the drawings are simply finished */
+html:not(.js) .scrub [data-from]:not([data-to]) { visibility: visible; }
+
+/* Painting frame over the ArAt picture: light lines with a soft shadow so they read on the painting */
+.paint-frame { position: absolute; top: 14px; right: 14px; bottom: 14px; left: 14px; pointer-events: none; }
+.frame-lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: visible; }
+.frame-lines path { fill: none; stroke: #f4ecdc; stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.paint-frame .frame-lines { filter: drop-shadow(0 1px 1px rgba(15, 22, 51, .55)); }
+.corner {
+  position: absolute; width: 16px; height: 16px; margin: -8px;
+  background: #f4ecdc; border: 2px solid #1f2a6b; border-radius: 3px; transform: rotate(45deg);
+}
+.corner.tl { top: 0; left: 0; } .corner.tr { top: 0; right: 0; }
+.corner.bl { bottom: 0; left: 0; } .corner.br { bottom: 0; right: 0; }
+.plaque {
+  position: absolute; left: 50%; bottom: -11px; transform: translateX(-50%);
+  padding: 2px 12px; background: #f4ecdc; color: #1f2a6b; border: 2px solid #1f2a6b; border-radius: 4px;
+  font: 600 .78rem Fraunces, Georgia, serif; letter-spacing: .06em; white-space: nowrap;
+}
+.frame-spark {
+  position: absolute; top: 8px; right: 14px; width: 18px; height: 18px; background: #f4ecdc;
+  -webkit-mask: var(--spark) center / contain no-repeat; mask: var(--spark) center / contain no-repeat;
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -235,7 +253,7 @@ html:not(.js) .flower [data-from]:not([data-to]) { visibility: visible; }
   .stat { padding: 6px 12px; }
   .stat-num { font-size: 15pt; }
   .stat-label { font-size: 9pt; }
-  .flower { display: none; }
+  .flower, .paint-frame { display: none; }
   .section { padding: 12px 0; }
   .section h2 { break-after: avoid; }
   .project, .school, .timeline li, .two-col > div, .contact { break-inside: avoid; }

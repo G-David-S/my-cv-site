@@ -84,45 +84,50 @@ function countUp(el) {
   })();
 }
 
-// Stop-motion flower: the frame follows the scroll position, so it grows when you
-// scroll down to the contact section and shrinks back when you scroll up.
-// Work happens only on scroll, at most once per screen refresh, and only when the frame changes.
-const flower = document.querySelector(".flower");
-if (flower) {
-  const parts = Array.prototype.slice.call(flower.querySelectorAll("[data-from]"));
-  const lastFrame = 10;
-  let shown = -1;
-  let queued = false;
-  const draw = (frame) => {
-    if (frame === shown) return;
-    shown = frame;
-    parts.forEach((part) => {
-      const from = +part.getAttribute("data-from");
-      const to = +(part.getAttribute("data-to") || lastFrame);
-      part.classList.toggle("on", frame >= from && frame <= to);
-    });
-  };
-  const update = () => {
-    queued = false;
-    const top = flower.getBoundingClientRect().top;
-    const h = window.innerHeight;
-    // 0 when the flower enters at the bottom of the screen; full bloom when it reaches
-    // 40% from the top, or at the very end of the page if it can't get that high.
-    const maxScroll = document.documentElement.scrollHeight - h;
-    const topAtEnd = top + window.pageYOffset - maxScroll;
-    const endTop = Math.min(h * 0.85, Math.max(h * 0.4, topAtEnd));
-    const progress = Math.max(0, Math.min(1, (h - top) / (h - endTop)));
-    draw(Math.round(progress * lastFrame));
-  };
-  if (reduceMotion) {
-    draw(lastFrame);
-  } else {
-    window.addEventListener("scroll", () => {
-      if (!queued) { queued = true; (window.requestAnimationFrame || setTimeout)(update); }
-    }, { passive: true });
-    window.addEventListener("resize", update);
-    update();
-  }
+// Stop-motion drawings (the flower and the painting frame): each one's frame follows the
+// scroll position, so it draws itself when you scroll down to it and undraws when you scroll up.
+// Work happens only on scroll, at most once per screen refresh, and only when a frame changes.
+const drawings = Array.prototype.slice.call(document.querySelectorAll(".scrub")).map((el) => ({
+  el: el,
+  parts: Array.prototype.slice.call(el.querySelectorAll("[data-from]")),
+  last: +el.getAttribute("data-frames"),
+  shown: -1
+}));
+function drawFrame(d, frame) {
+  if (frame === d.shown) return;
+  d.shown = frame;
+  d.parts.forEach((part) => {
+    const from = +part.getAttribute("data-from");
+    const to = +(part.getAttribute("data-to") || d.last);
+    part.classList.toggle("on", frame >= from && frame <= to);
+  });
+}
+let queued = false;
+function updateDrawings() {
+  queued = false;
+  const h = window.innerHeight;
+  const maxScroll = document.documentElement.scrollHeight - h;
+  drawings.forEach((d) => {
+    const top = d.el.getBoundingClientRect().top;
+    // Starts when it enters at the bottom of the screen (or where it sits when the page opens,
+    // if it's already on screen); finished when it reaches 40% from the top, or at the very
+    // end of the page if it can't get that high. Always spread over at least a third of a screen.
+    const topAtStart = top + window.pageYOffset;
+    const topAtEnd = topAtStart - maxScroll;
+    const startTop = Math.min(h, topAtStart);
+    const endTop = Math.min(startTop - h * 0.35, Math.min(h * 0.85, Math.max(h * 0.4, topAtEnd)));
+    const progress = Math.max(0, Math.min(1, (startTop - top) / (startTop - endTop)));
+    drawFrame(d, Math.round(progress * d.last));
+  });
+}
+if (reduceMotion) {
+  drawings.forEach((d) => drawFrame(d, d.last));
+} else if (drawings.length) {
+  window.addEventListener("scroll", () => {
+    if (!queued) { queued = true; (window.requestAnimationFrame || setTimeout)(updateDrawings); }
+  }, { passive: true });
+  window.addEventListener("resize", updateDrawings);
+  updateDrawings();
 }
 
 const blocks = document.querySelectorAll(".reveal");

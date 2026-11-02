@@ -102,6 +102,23 @@
           <img src="assets/arat.webp" width="1200" height="610" loading="lazy"
                data-i18n-attr="alt:arat_alt"
                alt="ArAt's entrance: a hand-painted old Budapest doorway with a keypad">
+          <!-- Stop-motion painting frame: draws itself around the picture as you scroll to it -->
+          <span class="paint-frame scrub" data-frames="12" aria-hidden="true">
+            <svg class="frame-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path data-from="1" d="M0 0Q25 -.6 50 0"/>
+              <path data-from="2" d="M50 0Q75 .6 100 0"/>
+              <path data-from="3" d="M100 0Q100.6 25 100 50"/>
+              <path data-from="4" d="M100 50Q99.4 75 100 100"/>
+              <path data-from="5" d="M100 100Q75 100.6 50 100"/>
+              <path data-from="6" d="M50 100Q25 99.4 0 100"/>
+              <path data-from="7" d="M0 100Q-.6 75 0 50"/>
+              <path data-from="8" d="M0 50Q.6 25 0 0"/>
+            </svg>
+            <i class="corner tl" data-from="9"></i><i class="corner br" data-from="9"></i>
+            <i class="corner tr" data-from="10"></i><i class="corner bl" data-from="10"></i>
+            <b class="plaque" data-from="11">ArAt · 2026</b>
+            <i class="frame-spark" data-from="12"></i>
+          </span>
         </a>
         <div class="project-body">
           <p class="eyebrow" data-i18n="arat_eyebrow">2026 · Web · Art</p>
@@ -202,9 +219,9 @@
     </section>
 
     <section class="section contact reveal" id="contact" aria-labelledby="contact-title">
-      <!-- Stop-motion flower: grows frame by frame as you scroll down to here,
+      <!-- Stop-motion flower (.scrub, see script.js): grows frame by frame as you scroll down to here,
            and shrinks back when you scroll up. Parts show while the frame is between data-from and data-to. -->
-      <svg class="flower" viewBox="0 0 120 150" aria-hidden="true" data-frame="0">
+      <svg class="flower scrub" viewBox="0 0 120 150" aria-hidden="true" data-frames="10">
         <path data-from="1" d="M28 142c10-3 22-4 33-3s22 1 32 4" class="soft"/>
         <path data-from="2" d="M60 141c-1-9 1-17 0-27"/>
         <path data-from="3" d="M60 114c1-10-1-19 1-30"/>
