@@ -69,21 +69,60 @@ document.querySelector(".lang-toggle").addEventListener("click", () => {
   save("lang", lang);
 });
 
-// ---------- Low-frame motion ----------
-// Blocks pop in on a few steps (see style.css), and numbers count up at about
-// 12 frames per second: a hand-made, stop-motion feel that costs almost nothing.
+// ---------- Motion ----------
+// The follower number counts up smoothly once, when it comes into view.
 function countUp(el) {
   const target = +el.dataset.to;
-  if (reduceMotion) { el.textContent = formatNumber(target); return; }
-  const frames = 14;
-  let frame = 0;
-  const timer = setInterval(() => {
-    frame++;
-    const eased = 1 - Math.pow(1 - frame / frames, 3);
-    const value = frame >= frames ? target : Math.round(target * eased);
+  if (reduceMotion || !window.requestAnimationFrame) { el.textContent = formatNumber(target); return; }
+  const start = Date.now();
+  const duration = 1100;
+  (function tick() {
+    const t = Math.min(1, (Date.now() - start) / duration);
+    const value = Math.round(target * (1 - Math.pow(1 - t, 3)));
     el.textContent = formatNumber(target >= 1000 ? Math.round(value / 1000) * 1000 : value);
-    if (frame >= frames) clearInterval(timer);
-  }, 83);
+    if (t < 1) requestAnimationFrame(tick);
+  })();
+}
+
+// Stop-motion flower: the frame follows the scroll position, so it grows when you
+// scroll down to the contact section and shrinks back when you scroll up.
+// Work happens only on scroll, at most once per screen refresh, and only when the frame changes.
+const flower = document.querySelector(".flower");
+if (flower) {
+  const parts = Array.prototype.slice.call(flower.querySelectorAll("[data-from]"));
+  const lastFrame = 10;
+  let shown = -1;
+  let queued = false;
+  const draw = (frame) => {
+    if (frame === shown) return;
+    shown = frame;
+    parts.forEach((part) => {
+      const from = +part.getAttribute("data-from");
+      const to = +(part.getAttribute("data-to") || lastFrame);
+      part.classList.toggle("on", frame >= from && frame <= to);
+    });
+  };
+  const update = () => {
+    queued = false;
+    const top = flower.getBoundingClientRect().top;
+    const h = window.innerHeight;
+    // 0 when the flower enters at the bottom of the screen; full bloom when it reaches
+    // 40% from the top, or at the very end of the page if it can't get that high.
+    const maxScroll = document.documentElement.scrollHeight - h;
+    const topAtEnd = top + window.pageYOffset - maxScroll;
+    const endTop = Math.min(h * 0.85, Math.max(h * 0.4, topAtEnd));
+    const progress = Math.max(0, Math.min(1, (h - top) / (h - endTop)));
+    draw(Math.round(progress * lastFrame));
+  };
+  if (reduceMotion) {
+    draw(lastFrame);
+  } else {
+    window.addEventListener("scroll", () => {
+      if (!queued) { queued = true; (window.requestAnimationFrame || setTimeout)(update); }
+    }, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  }
 }
 
 const blocks = document.querySelectorAll(".reveal");

@@ -92,14 +92,6 @@
         <span class="stat-num"><span class="count" data-to="600000">600,000</span>+</span>
         <span class="stat-label" data-i18n="stat_followers">followers in the Reador.art community</span>
       </div>
-      <div class="stat reveal">
-        <span class="stat-num"><span class="count" data-to="3">3</span></span>
-        <span class="stat-label" data-i18n="stat_years">years of analytics &amp; content work</span>
-      </div>
-      <div class="stat reveal">
-        <span class="stat-num"><span class="count" data-to="2">2</span></span>
-        <span class="stat-label" data-i18n="stat_langs">languages: Hungarian &amp; English (C2)</span>
-      </div>
     </section>
 
     <!-- Detail 3: project card -->
@@ -210,6 +202,26 @@
     </section>
 
     <section class="section contact reveal" id="contact" aria-labelledby="contact-title">
+      <!-- Stop-motion flower: grows frame by frame as you scroll down to here,
+           and shrinks back when you scroll up. Parts show while the frame is between data-from and data-to. -->
+      <svg class="flower" viewBox="0 0 120 150" aria-hidden="true" data-frame="0">
+        <path data-from="1" d="M28 142c10-3 22-4 33-3s22 1 32 4" class="soft"/>
+        <path data-from="2" d="M60 141c-1-9 1-17 0-27"/>
+        <path data-from="3" d="M60 114c1-10-1-19 1-30"/>
+        <path data-from="4" d="M60 120c-8-1-17-5-22-13 9-2 17 2 22 13z" class="leaf"/>
+        <path data-from="5" d="M61 104c7-1 15-6 20-14-9-1-16 4-20 14z" class="leaf"/>
+        <path data-from="6" d="M61 84c0-9 0-16-1-24"/>
+        <path data-from="7" data-to="7" d="M60 61c-6-4-7-12-1-19 6 6 7 14 1 19z" class="petal"/>
+        <g data-from="8" class="bloom">
+          <path d="M60 50c-4-9-1-19 0-24 3 5 6 15 0 24z" class="petal"/>
+          <path d="M60 50c-9-3-15-11-17-16 6 0 15 5 17 16z" class="petal"/>
+          <path d="M60 50c9-3 15-11 17-16-6 0-15 5-17 16z" class="petal"/>
+          <path d="M60 50c-9 3-17 1-21-3 5-3 14-5 21 3z" class="petal"/>
+          <path d="M60 50c9 3 17 1 21-3-5-3-14-5-21 3z" class="petal"/>
+        </g>
+        <circle data-from="9" cx="60" cy="49" r="4.5" class="heart"/>
+        <path data-from="10" d="M90 22c.4 3 .8 4.6 1.4 5.2s2.2 1 5.2 1.4c-3 .4-4.6.8-5.2 1.4s-1 2.2-1.4 5.2c-.4-3-.8-4.6-1.4-5.2s-2.2-1-5.2-1.4c3-.4 4.6-.8 5.2-1.4s1-2.2 1.4-5.2z" class="heart"/>
+      </svg>
       <h2 id="contact-title" data-i18n="h_contact">Let's make something.</h2>
       <p data-i18n="contact_text">The best way to reach me is email.</p>
       <div class="contact-actions">

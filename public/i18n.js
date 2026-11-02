@@ -10,8 +10,6 @@ window.I18N_HU = {
   intro: "Pénzügyet és matematikát tanulok a Budapesti Corvinus Egyetemen. Tanulmányaim mellett a Reador.art-ot több mint 600 000 követős közösséggé építettem, és most az ArAt-ot fejlesztem: egy webes projektet, amely valódi művészekkel köti össze az embereket. Akkor dolgozom a legjobban, amikor az alapos elemzés új ötletekkel találkozik.",
   email: "E-mail",
   stat_followers: "követő a Reador.art közösségben",
-  stat_years: "év elemzői és tartalomkészítő munka",
-  stat_langs: "nyelv: magyar és angol (C2)",
   h_project: "Kiemelt projekt",
   arat_alt: "Az ArAt bejárata: kézzel festett régi budapesti kapu kaputelefonnal",
   arat_eyebrow: "2026 · Web · Művészet",

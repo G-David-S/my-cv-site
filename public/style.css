@@ -8,9 +8,8 @@
   --accent-text: #f4ecdc;
   --line: #ddd0b6;
   --shadow: 0 1px 2px rgba(20, 28, 61, .06), 0 8px 24px rgba(20, 28, 61, .08);
-  /* Hand-drawn shapes, used as masks so they take the theme color */
+  /* Hand-drawn spark, used as a mask so it takes the theme color */
   --spark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1.5c.6 4.6 1.2 7.3 2.2 8.3s3.7 1.6 8.3 2.2c-4.6.6-7.3 1.2-8.3 2.2s-1.6 3.7-2.2 8.3c-.6-4.6-1.2-7.3-2.2-8.3S6.1 12.6 1.5 12c4.6-.6 7.3-1.2 8.3-2.2S11.4 6.1 12 1.5z'/%3E%3C/svg%3E");
-  --squiggle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6c10-4 18 3 28 0s18-5 28-1 18 3 28 0 18-4 32 0' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
@@ -102,13 +101,13 @@ main { max-width: 960px; margin: 0 auto; padding: 0 16px; }
 a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
 /* Numbers */
-.stats { display: flex; flex-wrap: wrap; margin: 0 -8px 40px; }
+.stats { margin: 0 0 40px; }
 .stat {
-  flex: 1 1 200px; margin: 8px; padding: 18px 20px;
+  display: inline-flex; align-items: baseline; padding: 14px 22px;
   background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
 }
-.stat-num { display: block; font: 600 2.2rem/1.1 Fraunces, serif; font-variant-numeric: tabular-nums; }
-.stat-label { display: block; margin-top: 6px; font-size: .9rem; color: var(--muted); }
+.stat-num { font: 600 2rem/1.1 Fraunces, serif; font-variant-numeric: tabular-nums; margin-right: 12px; }
+.stat-label { font-size: .95rem; color: var(--muted); }
 
 /* Project card */
 .project {
@@ -176,50 +175,34 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
 .print-only { display: none; }
 .footer { text-align: center; font-size: .85rem; color: var(--muted); padding: 32px 16px 48px; border-top: 1px solid var(--line); }
 
-/* ---------- Low-frame motion ----------
-   Stop-motion style: things move in a few visible steps instead of a smooth glide.
-   Only opacity and transform change, so even old phones keep up, and nothing loops forever. */
-
-/* Spark next to the top line: turns in 8 ticks once, and again when you point at the name */
+/* ---------- Motion ----------
+   Blocks fade in softly once. The only stop-motion piece is the flower in the contact
+   section: script.js picks its frame from the scroll position, so it grows when you scroll
+   down and shrinks back when you scroll up. Nothing runs while you're not scrolling. */
 .spark {
-  display: inline-block; width: 14px; height: 14px; margin-right: 10px;
+  display: inline-block; width: 12px; height: 12px; margin-right: 10px;
   background: var(--accent);
   -webkit-mask: var(--spark) center / contain no-repeat;
   mask: var(--spark) center / contain no-repeat;
 }
-.js .hero .is-visible .spark { animation: spark-turn 1s steps(8) 1; }
-.hero:hover .spark { animation: spark-turn 1s steps(8) 1; }
-@keyframes spark-turn { to { transform: rotate(180deg); } }
 
-/* Blocks pop in over 4 frames */
-.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .44s steps(4, end), transform .44s steps(4, end); }
+.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
 .js .reveal.is-visible { opacity: 1; transform: none; }
 
-/* Section titles: a hand-drawn underline scribbles in over 6 frames */
-.section h2 { position: relative; display: inline-block; padding-bottom: 8px; }
-.section h2::after {
-  content: ""; position: absolute; left: 0; bottom: 0; width: 100%; max-width: 150px; height: 8px;
-  background: var(--accent);
-  -webkit-mask: var(--squiggle) 0 0 / 100% 100% no-repeat;
-  mask: var(--squiggle) 0 0 / 100% 100% no-repeat;
-  transform-origin: left center;
-}
-.js .section h2.reveal::after, .js .section .reveal h2::after { transform: scaleX(0); }
-.js .section h2.reveal.is-visible::after, .js .section .reveal.is-visible h2::after,
-.js .section.reveal.is-visible h2::after { animation: scribble .5s steps(6, end) .25s both; }
-@keyframes scribble { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-.contact h2::after { left: 50%; margin-left: -75px; }
-
-/* Cards wobble once, like a frame being redrawn, when you point at them */
-.stat:hover, .school:hover { animation: wobble .36s steps(3) 1; }
-@keyframes wobble { 33% { transform: rotate(-.6deg); } 66% { transform: rotate(.6deg); } }
+.flower { display: block; width: 120px; height: 150px; margin: 0 auto 4px; overflow: visible; }
+.flower path, .flower circle { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.flower .soft { opacity: .45; }
+.flower .leaf { fill: var(--surface); }
+.flower .petal { fill: var(--bg); }
+.flower .heart { fill: var(--accent); stroke: none; }
+.flower [data-from] { visibility: hidden; }
+.flower [data-from].on { visibility: visible; }
+/* Without JavaScript (and in the PDF) the flower is simply in full bloom */
+html:not(.js) .flower [data-from]:not([data-to]) { visibility: visible; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
-  .spark, .stat:hover, .school:hover { animation: none !important; }
-  .js .section h2::after { transform: none !important; animation: none !important; }
-  .btn:hover, .chip:hover, .project:hover .project-image img { transform: none; }
 }
 
 /* Phones */
@@ -230,7 +213,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
   .school { flex-direction: column; align-items: flex-start; }
   .school-logo { margin: 0 0 16px; }
   .stats { margin-bottom: 24px; }
-  .stat { padding: 14px 16px; }
+  .stat { padding: 12px 16px; }
 }
 @media (max-width: 420px) {
   .topbar .btn span { display: none; }
@@ -245,14 +228,14 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
   body { font-size: 10.5pt; line-height: 1.45; }
   .topbar, .profiles, .contact-actions, .footer, .project .btn, .spark { display: none; }
   .js .reveal { opacity: 1; transform: none; }
-  .section h2::after { display: none; }
   .hero { padding: 0 0 8px; }
   h1 { font-size: 26pt; }
   .lead { font-size: 13pt; }
-  .stats { margin: 0 -4px 6px; }
-  .stat { margin: 4px; padding: 8px 12px; }
-  .stat-num { font-size: 16pt; }
-  .stat-label { font-size: 8.5pt; margin-top: 2px; }
+  .stats { margin: 0 0 6px; }
+  .stat { padding: 6px 12px; }
+  .stat-num { font-size: 15pt; }
+  .stat-label { font-size: 9pt; }
+  .flower { display: none; }
   .section { padding: 12px 0; }
   .section h2 { break-after: avoid; }
   .project, .school, .timeline li, .two-col > div, .contact { break-inside: avoid; }
