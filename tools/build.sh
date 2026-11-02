@@ -5,6 +5,13 @@ set -e
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 cd "$(dirname "$0")/.."
 
+# Version stamps: style.css?v=…, script.js?v=… in index.html change whenever the file changes,
+# so browsers never mix a new page with an old cached style or script.
+for f in style.css i18n.js script.js; do
+  v=$(shasum public/$f | cut -c1-8)
+  sed -i '' -E "s#(href|src)=\"$f(\?v=[0-9a-f]+)?\"#\1=\"$f?v=$v\"#" public/index.html
+done
+
 python3 -m http.server 8131 --directory public >/dev/null 2>&1 &
 SERVER=$!
 trap 'kill $SERVER' EXIT
