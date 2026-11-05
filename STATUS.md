@@ -1,21 +1,23 @@
-# Status – my-cv-site (2026-11-02)
+# Status – my-cv-site (2026-11-05)
 
 ## Done
-- Live CV page: https://cv-gulyas-david.web.app (copy: https://g-david-s.github.io/my-cv-site/), code on GitHub (G-David-S/my-cv-site).
-- English + Hungarian, dark mode, PDF CV in both languages, QR code, link preview, 404 page; uses the full width on big screens.
-- Fun parts: scroll-drawn frame (ArAt picture) and flower (contact); code-lock game (4 faint random digits → cookie); coffee cup that picks a favourite Budapest café.
-- Handed in as Vibe Coding Class homework 4; resubmitted 2026-11-02 15:59 with the final version.
+- Live CV page: https://cv-gulyas-david.web.app (copy: https://g-david-s.github.io/my-cv-site/), code on GitHub (G-David-S/my-cv-site). Last deploy 2026-11-05.
+- Short and focused on purpose (keep it that way): profile, two projects (ArAt, Reador's Cards) with art banners, Experience, Education, Skills with line icons, Languages, contact.
+- Look: Swiss-poster hero + hairline tile grid, Montserrat, midnight blue/beige with terracotta + teal accents, soft grey dark mode, flower and frame line art, scroll/entrance motion (respects reduced motion).
+- Extras kept: code-lock puzzle with hidden digits and cookie, QR card, faint code trail behind the mouse (normal cursor stays).
+- English + Hungarian, PDF CV in both (2 pages), SEO (meta, JSON-LD, robots, sitemap), email opens an in-page row (mail app / Gmail / copy).
 
 ## Where we are
-- Finished. No custom domain (owner doesn't want to pay). Browsers always get the newest version (no-cache + version stamps).
-- Goal line under the name left out on purpose (marked GOAL in public/index.html).
+- Finished and deployed. No custom domain (owner doesn't want to pay).
+- Goal line under the name left out on purpose (the role line is there instead).
+- Removed on request: coffee cup, path chart, duel mini game, scope-style cursor, ruler under the number.
 
 ## Next
-- Add the goal line when decided (EN in index.html, HU in public/i18n.js), then rebuild + deploy.
-- After any text change: `sh tools/build.sh`, commit, push, deploy (commands in README.md).
+- Add real numbers to the experience bullets (follower growth, ROI result, sales) when the owner has them.
+- After any change: `sh tools/build.sh`, commit, push, deploy (commands in README.md).
 
 ## Later
-- Painting gallery, a private visit counter.
+- Possible follower-growth chart (needs real data), painting gallery, a private visit counter.
 
 ## How to start
-- Preview locally with the "cv-site" server (port 8130); README.md has the file map. Café list: top of the coffee part in public/script.js.
+- Preview server "cv-site" (port 8130); README.md has the file map. Browsers cache index.html: open with `?nocache=N` after edits.
