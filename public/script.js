@@ -145,11 +145,56 @@ if (spots.length === 4 && lockCard) {
     digit.className = "hidden-digit";
     digit.setAttribute("aria-hidden", "true");
     digit.textContent = code[i];
-    digit.style.left = (6 + Math.random() * 80) + "%";
-    digit.style.top = (12 + Math.random() * 60) + "%";
     digit.style.transform = "rotate(" + Math.round(Math.random() * 30 - 15) + "deg)";
     spots[i].appendChild(digit);
   }
+
+  // Put each digit in the emptiest place of its area: it must not sit on a button, card, picture
+  // or text, where it would be hidden or unreadable. Runs again when the area changes size
+  // (phone turning, language switch).
+  const OBSTACLES = "a, button, p, h1, h2, h3, h4, li, img, .lock-card, .coffee, .plaque";
+  const placeDigit = (digit, spot) => {
+    digit.style.visibility = "visible";
+    const s = spot.getBoundingClientRect();
+    const w = digit.offsetWidth || 60, h = digit.offsetHeight || 90;
+    const maxX = s.width - w - 8, maxY = s.height - h - 8;
+    if (maxX < 8 || maxY < 8) return;
+    const boxes = Array.prototype.slice.call(spot.querySelectorAll(OBSTACLES))
+      .filter((el) => el !== digit && !el.contains(digit))
+      .map((el) => el.getBoundingClientRect())
+      .filter((b) => b.width > 1 && b.height > 1);
+    let best = null;
+    for (let n = 0; n < 300 && (!best || best.cost > 0); n++) {
+      const x = 8 + Math.random() * maxX, y = 8 + Math.random() * maxY;
+      let cost = 0;
+      boxes.forEach((b) => {
+        const ox = Math.min(x + w, b.right - s.left) - Math.max(x, b.left - s.left);
+        const oy = Math.min(y + h, b.bottom - s.top) - Math.max(y, b.top - s.top);
+        if (ox > 0 && oy > 0) cost += ox * oy;
+      });
+      if (!best || cost < best.cost) best = { x, y, cost };
+    }
+    digit.style.left = best.x + "px";
+    digit.style.top = best.y + "px";
+  };
+  const placeAll = () => {
+    spots.forEach((spot) => placeDigit(spot.querySelector(".hidden-digit"), spot));
+  };
+  // Placing reads the layout of the whole page, so do it rarely: once the page has settled
+  // (after load and fonts), and again only when the width changes (rotating a phone, resizing).
+  // Not on every height change, so the numbers never jump around while pictures load.
+  let placeTimer = 0, placedWidth = 0;
+  const placeSoon = () => {
+    clearTimeout(placeTimer);
+    placeTimer = setTimeout(() => {
+      placedWidth = window.innerWidth;
+      (window.requestAnimationFrame || setTimeout)(placeAll);
+    }, 200);
+  };
+  window.addEventListener("resize", () => { if (window.innerWidth !== placedWidth) placeSoon(); });
+  window.addEventListener("load", placeSoon);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeSoon);
+  placeSoon();
 
   const lock = lockCard.querySelector(".lock");
   const dials = Array.prototype.slice.call(lockCard.querySelectorAll(".dial"));
@@ -252,4 +297,28 @@ if ("IntersectionObserver" in window) {
   blocks.forEach((block) => observer.observe(block));
 } else {
   blocks.forEach((block) => block.classList.add("is-visible"));
+}
+
+
+// ---------- Code trail behind the mouse ----------
+// Small code characters appear along the mouse path and fade away. Only with a real mouse
+// (not on touch screens) and not when the visitor asked for less motion. Light: at most a handful alive.
+if (window.matchMedia && matchMedia("(pointer: fine)").matches && !reduceMotion) {
+  const GLYPHS = "01{}[]<>/;=+*#$&?~|".split("");
+  let lastX = -999, lastY = -999, alive = 0;
+  window.addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "mouse" || alive > 10) return;
+    const dx = e.clientX - lastX, dy = e.clientY - lastY;
+    if (dx * dx + dy * dy < 26 * 26) return;
+    lastX = e.clientX; lastY = e.clientY;
+    const bit = document.createElement("span");
+    bit.className = "code-bit";
+    bit.setAttribute("aria-hidden", "true");
+    bit.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+    bit.style.left = (e.clientX + 8) + "px";
+    bit.style.top = (e.clientY + 8) + "px";
+    alive++;
+    bit.addEventListener("animationend", () => { bit.remove(); alive--; });
+    document.body.appendChild(bit);
+  }, { passive: true });
 }
