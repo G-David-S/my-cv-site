@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cv-gulyas-david.web.app/sitemap.xml

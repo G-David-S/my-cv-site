@@ -182,7 +182,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
 /* ---------- Little game: hidden numbers + code lock ---------- */
 .hidden-digit {
   position: absolute; z-index: 1; pointer-events: none; user-select: none; visibility: hidden;
-  font: 600 90px/1 Montserrat, system-ui, sans-serif; color: var(--accent); opacity: .13;
+  font: 600 90px/1 Montserrat, system-ui, sans-serif; color: var(--accent); opacity: .14;
 }
 /* dark mode: the accent is navy on navy, so use the text colour or the number is invisible */
 :root[data-theme="dark"] .hidden-digit { color: var(--text); opacity: .12; }
@@ -336,13 +336,90 @@ html:not(.js) .scrub [data-from]:not([data-to]) { visibility: visible; }
   .topbar .btn svg { margin-right: 0; }
 }
 
-/* Code characters that trail the mouse */
-.code-bit {
-  position: fixed; z-index: 50; pointer-events: none; user-select: none;
-  font: 500 13px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--muted);
-  animation: code-bit .75s ease-out forwards; will-change: transform, opacity;
+/* ---------- Avant-garde layer: exposed grid, mono labels, flat hairline boxes ----------
+   Ideas taken from architects' and graphic designers' sites: strict type hierarchy, big tight
+   display type, numbered sections with hairline rules, flat boxes with no shadows, and small
+   "+" registration marks like on a drawing. Each one makes the page easier to scan. */
+:root { --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+h1 { font-size: 2.3rem; font-size: clamp(2.2rem, 9.5vw, 5rem); font-weight: 800; text-transform: uppercase; letter-spacing: -.015em; line-height: 1.1; }
+.eyebrow, .when { font-family: var(--mono); }
+.eyebrow { font-weight: 500; letter-spacing: .18em; }
+.when { font-weight: 500; font-size: .8rem; letter-spacing: .03em; }
+
+main { counter-reset: sec; }
+.section { position: relative; padding: 36px 0; }
+.section::before, .section::after { content: "+"; position: absolute; top: -9px; font: 400 15px/1 var(--mono); color: var(--muted); background: var(--bg); line-height: 1; }
+.section::before { left: -5px; }
+.section::after { right: -5px; }
+.section h2:not(#contact-title) {
+  display: flex; align-items: center; margin: 0 0 22px; counter-increment: sec;
+  font: 700 .8rem/1 var(--mono); text-transform: uppercase; letter-spacing: .16em;
 }
-@keyframes code-bit { from { opacity: .85; transform: translateY(0); } to { opacity: 0; transform: translateY(14px); } }
+.section h2:not(#contact-title)::before { content: counter(sec, decimal-leading-zero); margin-right: 14px; color: var(--muted); }
+.section h2:not(#contact-title)::after { content: ""; flex: 1; height: 1px; margin-left: 16px; background: var(--line); }
+.contact h2 { font-size: clamp(1.8rem, 5vw, 3rem); letter-spacing: -.02em; }
+
+/* flat boxes with hairlines instead of rounded shadowed ones */
+.btn, .chip, .tags li, .theme-toggle, .lang-toggle, .stat, .project, .school, .lock-card, .qr-card { border-radius: 0; box-shadow: none; }
+.stat { background: none; border: 0; border-left: 2px solid var(--accent); padding: 4px 0 4px 16px; }
+@media (min-width: 1000px) {
+  .hero-side .stat { padding: 4px 0 4px 20px; }
+  .hero-side .stat-num { font-size: 3.6rem; font-weight: 800; }
+}
+
+/* projects: two compact cards side by side */
+.proj-layout, .proj-list { display: grid; grid-gap: 16px; }
+.proj-list .project + .project { margin-top: 0; }
+.project { grid-template-columns: 150px 1fr; }
+.project-body { padding: 16px 18px; }
+.project-body p { font-size: .88rem; line-height: 1.55; margin-bottom: .7em; }
+.project h3 { font-size: 1.05rem; margin: 0 0 .3em; }
+.project .eyebrow { font-size: .66rem; margin-bottom: .4em; }
+.project .tags { margin-bottom: 12px; }
+.project .btn { padding: .45em 1em; font-size: .85rem; }
+@media (min-width: 1000px) {
+  .proj-list { grid-template-columns: 1fr 1fr; grid-gap: 24px; align-items: start; }
+  .project { grid-template-columns: 150px 1fr; }
+  .project-body { padding: 16px 20px; }
+}
+@media (max-width: 720px) {
+  .project { grid-template-columns: 1fr; }
+  .project-image { height: auto; aspect-ratio: 1200 / 610; }
+  .hidden-digit { font-size: 64px; }
+}
+/* small side thumbnails: the frame keeps its lines and corners, but the plaque and spark would crowd it */
+@media (min-width: 721px) {
+  .project-image .plaque, .project-image .frame-spark { display: none; }
+  .project-image .corner { width: 11px; height: 11px; margin: -5.5px; }
+}
+
+/* Skill icons */
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.ico { width: 1.15em; height: 1.15em; margin-right: .5em; color: var(--accent); stroke-width: 1.8; vertical-align: -.2em; }
+.tags-lg li { display: inline-flex; align-items: center; }
+.tags-lg .ico { vertical-align: 0; }
+
+/* Code characters behind the mouse: few, small, and they barely fall */
+.code-bit {
+  position: fixed; z-index: 60; pointer-events: none; user-select: none;
+  font: 600 13px/1 var(--mono); color: var(--muted); will-change: transform, opacity;
+  animation: code-bit .55s ease-out forwards;
+}
+@keyframes code-bit { from { opacity: .8; transform: translateY(0); } to { opacity: 0; transform: translateY(6px); } }
+
+/* "Copy / Gmail" note under the email buttons */
+.mail-note {
+  position: fixed; left: 50%; bottom: 16px; z-index: 70; display: none; align-items: center;
+  max-width: calc(100% - 24px); padding: 8px 8px 8px 14px; transform: translateX(-50%);
+  background: var(--surface); color: var(--text); border: 1px solid var(--accent); font-size: .85rem;
+}
+.mail-note.show { display: flex; }
+.mail-addr { margin-right: 12px; overflow-wrap: anywhere; font-family: var(--mono); font-size: .8rem; }
+.mail-note button, .mail-note a {
+  margin-left: 6px; padding: .3em .8em; border: 1px solid var(--line); background: var(--bg); color: var(--text);
+  font: 500 .8rem Montserrat, system-ui, sans-serif; text-decoration: none; cursor: pointer; white-space: nowrap;
+}
+.mail-note .mail-x { padding: .3em .6em; }
 
 /* Print / PDF: light colors, no buttons, compact, QR code included */
 @media print {
@@ -359,7 +436,10 @@ html:not(.js) .scrub [data-from]:not([data-to]) { visibility: visible; }
   .stat { padding: 6px 12px; }
   .stat-num { font-size: 15pt; }
   .stat-label { font-size: 9pt; }
-  .flower, .paint-frame, .hidden-digit, .lock-card, .coffee { display: none !important; }
+  .flower, .paint-frame, .hidden-digit, .lock-card, .coffee, .code-bit, .mail-note { display: none !important; }
+  .section::before, .section::after { display: none; }
+  .proj-layout, .proj-list { display: block; }
+  .project-image { display: none; }
   .hero, .cv-cols { display: block; }
   .hero-side .stat { display: inline-flex; padding: 6px 12px; }
   .hero-side .stat-num { display: inline; font-size: 15pt; margin: 0 12px 0 0; }

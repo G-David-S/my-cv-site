@@ -1,7 +1,7 @@
 // Hungarian texts. English is written in index.html; each key matches a data-i18n="…"
 // (or data-i18n-attr="attribute:key") in the page.
 window.I18N_HU = {
-  title: "Gulyás Dávid Sámuel · Önéletrajz",
+  title: "Gulyás Dávid Sámuel · Pénzügy és matematika szakos hallgató, a Reador.art alapítója",
   download: "Önéletrajz",
   download_aria: "Önéletrajz letöltése (PDF)",
   theme_aria: "Világos / sötét mód váltása",
@@ -38,7 +38,7 @@ window.I18N_HU = {
   bit_text: "Vállalkozási ügyviteli ügyintéző: közgazdaságtan, számvitel, üzleti elemzés, dokumentáció.",
   kreativ_text: "Grafikai képzés.",
   h_skills: "Készségek",
-  skills: "<h3>Kreatív</h3><ul class=\"tags tags-lg\"><li>Festés és illusztráció</li><li>Grafikai tervezés</li><li>Adobe-programok</li></ul><h3>Adat és elemzés</h3><ul class=\"tags tags-lg\"><li>Python</li><li>Excel és Google Táblázatok</li><li>Statisztika</li><li>Matematika</li><li>Üzleti elemzés</li></ul><h3>Építés</h3><ul class=\"tags tags-lg\"><li>Weboldalépítés AI-ügynökökkel</li></ul><h3>Emberek és növekedés</h3><ul class=\"tags tags-lg\"><li>Tartalom- és közösségépítés</li><li>Problémamegoldás</li></ul>",
+  skills: "<h3>Kreatív</h3><ul class=\"tags tags-lg\"><li><svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-brush\"/></svg>Festés és illusztráció</li><li><svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-pen\"/></svg>Grafikai tervezés</li><li><svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-layers\"/></svg>Adobe-programok</li></ul><h3>Adat és elemzés</h3><ul class=\"tags tags-lg\"><li><svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-python\"/></svg>Python</li><li><svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-sheet\"/></svg>Excel és Google Táblázatok</li><li><svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-stat\"/></svg>Statisztika</li><li><svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-math\"/></svg>Matematika</li><li><svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-chart\"/></svg>Üzleti elemzés</li></ul><h3>Építés</h3><ul class=\"tags tags-lg\"><li><svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-agent\"/></svg>Weboldalépítés AI-ügynökökkel</li></ul><h3>Emberek és növekedés</h3><ul class=\"tags tags-lg\"><li><svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-people\"/></svg>Tartalom- és közösségépítés</li><li><svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-idea\"/></svg>Problémamegoldás</li></ul>",
   h_langs: "Nyelvek",
   langs: "<li><strong>Magyar</strong> anyanyelv</li><li><strong>Angol</strong> C2</li>",
   h_outside: "Szabadidőben",

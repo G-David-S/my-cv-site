@@ -15,8 +15,40 @@ document.querySelector(".theme-toggle").addEventListener("click", () => {
 });
 
 // Email links are put together here, so simple spam bots can't read the address.
+// Not everyone has a mail app set up, so a small note also offers "Copy" and "Gmail".
+let toastTimer = 0;
+function showMailNote(address) {
+  let note = document.querySelector(".mail-note");
+  if (!note) {
+    note = document.createElement("div");
+    note.className = "mail-note";
+    note.setAttribute("role", "status");
+    document.body.appendChild(note);
+  }
+  const hu = lang === "hu";
+  note.innerHTML = '<span class="mail-addr"></span><button type="button" class="mail-copy"></button>' +
+    '<a class="mail-gmail" target="_blank" rel="noopener">Gmail</a><button type="button" class="mail-x" aria-label="' + (hu ? "Bezár" : "Close") + '">×</button>';
+  note.querySelector(".mail-addr").textContent = address;
+  const copy = note.querySelector(".mail-copy");
+  copy.textContent = hu ? "Másol" : "Copy";
+  note.querySelector(".mail-gmail").href = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(address);
+  copy.addEventListener("click", () => {
+    const done = () => { copy.textContent = hu ? "Másolva ✓" : "Copied ✓"; };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(address).then(done, done);
+    else {
+      const t = document.createElement("textarea"); t.value = address; document.body.appendChild(t); t.select();
+      try { document.execCommand("copy"); } catch (e) {} t.remove(); done();
+    }
+  });
+  note.querySelector(".mail-x").addEventListener("click", () => note.classList.remove("show"));
+  note.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => note.classList.remove("show"), 12000);
+}
 document.querySelectorAll(".js-email").forEach((link) => {
-  link.href = "mailto:" + link.dataset.user + "@" + link.dataset.domain;
+  const address = link.dataset.user + "@" + link.dataset.domain;
+  link.href = "mailto:" + address;
+  link.addEventListener("click", () => { showMailNote(address); });
 });
 
 // ---------- HU / EN ----------
@@ -152,7 +184,7 @@ if (spots.length === 4 && lockCard) {
   // Put each digit in the emptiest place of its area: it must not sit on a button, card, picture
   // or text, where it would be hidden or unreadable. Runs again when the area changes size
   // (phone turning, language switch).
-  const OBSTACLES = "a, button, p, h1, h2, h3, h4, li, img, .lock-card, .coffee, .plaque";
+  const OBSTACLES = "a, button, p, h1, h2, h3, h4, li, img, svg, span, strong, b, figcaption, .stat, .lock-card, .coffee";
   const placeDigit = (digit, spot) => {
     digit.style.visibility = "visible";
     const s = spot.getBoundingClientRect();
@@ -301,22 +333,22 @@ if ("IntersectionObserver" in window) {
 
 
 // ---------- Code trail behind the mouse ----------
-// Small code characters appear along the mouse path and fade away. Only with a real mouse
-// (not on touch screens) and not when the visitor asked for less motion. Light: at most a handful alive.
+// A few small code characters appear behind the mouse and fade almost on the spot. Only with a real
+// mouse (not on touch screens) and not when the visitor asked for less motion. The pointer itself stays normal.
 if (window.matchMedia && matchMedia("(pointer: fine)").matches && !reduceMotion) {
-  const GLYPHS = "01{}[]<>/;=+*#$&?~|".split("");
+  const GLYPHS = "01{}[]<>/;=+*#$&?~|()".split("");
   let lastX = -999, lastY = -999, alive = 0;
   window.addEventListener("pointermove", (e) => {
-    if (e.pointerType !== "mouse" || alive > 10) return;
+    if (e.pointerType !== "mouse" || alive > 6) return;
     const dx = e.clientX - lastX, dy = e.clientY - lastY;
-    if (dx * dx + dy * dy < 26 * 26) return;
+    if (dx * dx + dy * dy < 40 * 40) return;
     lastX = e.clientX; lastY = e.clientY;
     const bit = document.createElement("span");
     bit.className = "code-bit";
     bit.setAttribute("aria-hidden", "true");
     bit.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-    bit.style.left = (e.clientX + 8) + "px";
-    bit.style.top = (e.clientY + 8) + "px";
+    bit.style.left = (e.clientX + 12) + "px";
+    bit.style.top = (e.clientY + 6) + "px";
     alive++;
     bit.addEventListener("animationend", () => { bit.remove(); alive--; });
     document.body.appendChild(bit);
