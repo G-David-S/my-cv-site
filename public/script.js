@@ -5,33 +5,45 @@ const reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: r
 function save(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
 function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
 
+let fadeTimer = 0;
 // Light / dark switch. The choice is remembered on this device.
 document.querySelector(".theme-toggle").addEventListener("click", () => {
   const isDark = root.dataset.theme
     ? root.dataset.theme === "dark"
     : matchMedia("(prefers-color-scheme: dark)").matches;
+  if (!reduceMotion) {
+    root.classList.add("theme-fade");
+    clearTimeout(fadeTimer);
+    fadeTimer = setTimeout(() => root.classList.remove("theme-fade"), 450);
+  }
   root.dataset.theme = isDark ? "light" : "dark";
   save("theme", root.dataset.theme);
 });
 
 // Email links are put together here, so simple spam bots can't read the address.
-// Not everyone has a mail app set up, so a small note also offers "Copy" and "Gmail".
-let toastTimer = 0;
-function showMailNote(address) {
-  let note = document.querySelector(".mail-note");
-  if (!note) {
-    note = document.createElement("div");
-    note.className = "mail-note";
-    note.setAttribute("role", "status");
-    document.body.appendChild(note);
-  }
+// Not everyone has a mail app set up, so clicking Email opens a small row under the buttons with
+// three ways to write: mail app, Gmail, or copy the address. It sits in the page flow, so it never covers anything.
+var mailPanel = null;
+function showMailPanel(address, link) {
+  const host = link.closest(".profiles, .contact-actions");
+  if (!host) return;
+  const sameSpot = mailPanel && mailPanel.previousSibling === host;
+  if (mailPanel) { mailPanel.remove(); mailPanel = null; }
+  if (sameSpot) return; // second click closes it
   const hu = lang === "hu";
-  note.innerHTML = '<span class="mail-addr"></span><button type="button" class="mail-copy"></button>' +
-    '<a class="mail-gmail" target="_blank" rel="noopener">Gmail</a><button type="button" class="mail-x" aria-label="' + (hu ? "Bezár" : "Close") + '">×</button>';
-  note.querySelector(".mail-addr").textContent = address;
-  const copy = note.querySelector(".mail-copy");
-  copy.textContent = hu ? "Másol" : "Copy";
-  note.querySelector(".mail-gmail").href = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(address);
+  const panel = document.createElement("div");
+  panel.className = "mail-panel";
+  panel.innerHTML = '<span class="mail-addr"></span>' +
+    '<a class="mp mp-app"></a><a class="mp mp-gmail" target="_blank" rel="noopener">Gmail</a>' +
+    '<button type="button" class="mp mp-copy"></button><button type="button" class="mp mp-x"></button>';
+  panel.querySelector(".mail-addr").textContent = address;
+  panel.querySelector(".mp-app").textContent = hu ? "Levelezőprogram" : "Mail app";
+  panel.querySelector(".mp-app").href = "mailto:" + address;
+  panel.querySelector(".mp-gmail").href = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(address);
+  const copy = panel.querySelector(".mp-copy");
+  copy.textContent = hu ? "Másolás" : "Copy";
+  const x = panel.querySelector(".mp-x");
+  x.textContent = "×"; x.setAttribute("aria-label", hu ? "Bezár" : "Close");
   copy.addEventListener("click", () => {
     const done = () => { copy.textContent = hu ? "Másolva ✓" : "Copied ✓"; };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(address).then(done, done);
@@ -40,15 +52,14 @@ function showMailNote(address) {
       try { document.execCommand("copy"); } catch (e) {} t.remove(); done();
     }
   });
-  note.querySelector(".mail-x").addEventListener("click", () => note.classList.remove("show"));
-  note.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => note.classList.remove("show"), 12000);
+  x.addEventListener("click", () => { panel.remove(); mailPanel = null; link.focus(); });
+  host.parentNode.insertBefore(panel, host.nextSibling);
+  mailPanel = panel;
 }
 document.querySelectorAll(".js-email").forEach((link) => {
   const address = link.dataset.user + "@" + link.dataset.domain;
-  link.href = "mailto:" + address;
-  link.addEventListener("click", () => { showMailNote(address); });
+  link.href = "mailto:" + address; // still a real link (long-press, right-click, no-JS fallbacks)
+  link.addEventListener("click", (e) => { e.preventDefault(); showMailPanel(address, link); });
 });
 
 // ---------- HU / EN ----------
@@ -139,6 +150,7 @@ function updateDrawings() {
   queued = false;
   const h = window.innerHeight;
   const maxScroll = document.documentElement.scrollHeight - h;
+  root.style.setProperty("--p", maxScroll > 0 ? Math.min(1, window.pageYOffset / maxScroll).toFixed(3) : 0);
   drawings.forEach((d) => {
     const top = d.el.getBoundingClientRect().top;
     // Starts when it enters at the bottom of the screen (or where it sits when the page opens,
@@ -247,6 +259,7 @@ if (spots.length === 4 && lockCard) {
   };
   const turn = (dial, step) => {
     dial.textContent = (+dial.textContent + step + 10) % 10;
+    if (!reduceMotion) { dial.classList.remove("tick"); void dial.offsetWidth; dial.classList.add("tick"); }
     check();
   };
   dials.forEach((dial) => {
@@ -265,8 +278,16 @@ function show(block) {
 }
 if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver((entries) => {
+    let n = 0;
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
+        // blocks that arrive together come in one after another
+        if (!reduceMotion && n > 0) {
+          const t = entry.target;
+          t.style.transitionDelay = Math.min(n, 5) * 90 + "ms";
+          setTimeout(() => { t.style.transitionDelay = ""; }, 1200);
+        }
+        n++;
         show(entry.target);
         observer.unobserve(entry.target);
       }
