@@ -1,23 +1,15 @@
-# Status – my-cv-site (2026-11-05)
+# Status – my-cv-site (2026-11-09)
 
 ## Done
-- Live CV page: https://cv-gulyas-david.web.app (copy: https://g-david-s.github.io/my-cv-site/), code on GitHub (G-David-S/my-cv-site). Last deploy 2026-11-05.
-- Short and focused on purpose (keep it that way): profile, two projects (ArAt, Reador's Cards) with art banners, Experience, Education, Skills with line icons, Languages, contact.
-- Look: Swiss-poster hero + hairline tile grid, Montserrat, midnight blue/beige with terracotta + teal accents, soft grey dark mode, flower and frame line art, scroll/entrance motion (respects reduced motion).
-- Extras kept: code-lock puzzle with hidden digits and cookie, QR card, faint code trail behind the mouse (normal cursor stays).
-- English + Hungarian, PDF CV in both (2 pages), SEO (meta, JSON-LD, robots, sitemap), email opens an in-page row (mail app / Gmail / copy).
-
-## Where we are
-- Finished and deployed. No custom domain (owner doesn't want to pay).
-- Goal line under the name left out on purpose (the role line is there instead).
-- Removed on request: coffee cup, path chart, duel mini game, scope-style cursor, ruler under the number.
+- Rebuilt from scratch in the osply.co style (see README). Old version backed up on GitHub: branch + tag `old-version`.
+- Projects: Readors Exped, Reador.art, plus "Coming soon" rows for Café Notes (reviews) and Analysis Lab (political/economic analysis and modelling).
+- Reworded lead and bullet points (impact style, no invented numbers). PDFs rebuilt from tools/cv-print.html.
+- Live: https://cv-gulyas-david.web.app (Firebase) + GitHub Pages mirror.
 
 ## Next
-- Add real numbers to the experience bullets (follower growth, ROI result, sales) when the owner has them.
-- After any change: `sh tools/build.sh`, commit, push, deploy (commands in README.md).
-
-## Later
-- Possible follower-growth chart (needs real data), painting gallery, a private visit counter.
+- Real numbers for the bullets (follower growth, ROI result, sales) when the owner has them.
+- Build the Café Notes and Analysis Lab pages when the owner is ready.
+- Check the intro and mouse effects on a real phone.
 
 ## How to start
-- Preview server "cv-site" (port 8130); README.md has the file map. Browsers cache index.html: open with `?nocache=N` after edits.
+- Preview server "cv-site" (port 8130). Add `?still` to the address to skip the intro.
