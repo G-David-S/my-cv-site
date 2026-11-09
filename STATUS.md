@@ -7,6 +7,8 @@
 - Reworded lead and bullet points (impact style, no invented numbers). PDFs rebuilt from tools/cv-print.html.
 - Live: https://cv-gulyas-david.web.app (Firebase) + GitHub Pages mirror.
 
+- Easter egg: 5 golden snowflakes fall over the painting; catch them (click/tap) -> dawn breaks, collectible "Exped" card with Download. Night is the default theme.
+
 ## Next
 - Real numbers for the bullets (follower growth, ROI result, sales) when the owner has them.
 - Build the Café Notes and Analysis Lab pages when the owner is ready.
