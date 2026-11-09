@@ -2,6 +2,7 @@
 
 ## Done
 - Rebuilt from scratch in the osply.co style (see README). Old version backed up on GitHub: branch + tag `old-version`.
+- Review fixes: skip link, real h2 headings, focus rings, reduced-motion respected, security headers + CSP in firebase.json, Readors Exped shown as "In development" (its repo is private, so no link).
 - Projects: Readors Exped, Reador.art, plus "Coming soon" rows for Café Notes (reviews) and Analysis Lab (political/economic analysis and modelling).
 - Reworded lead and bullet points (impact style, no invented numbers). PDFs rebuilt from tools/cv-print.html.
 - Live: https://cv-gulyas-david.web.app (Firebase) + GitHub Pages mirror.

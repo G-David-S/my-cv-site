@@ -20,6 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://cv-gulyas-david.web.app/assets/preview.png">
 <meta name="theme-color" content="#0a1313">
+<meta name="color-scheme" content="dark light">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfilePage","mainEntity":{"@type":"Person","name":"Gulyás Dávid Sámuel","givenName":"Dávid Sámuel","familyName":"Gulyás","url":"https://cv-gulyas-david.web.app/","image":"https://cv-gulyas-david.web.app/assets/preview.png","jobTitle":"Painter, finance and mathematics student, founder of Reador.art","description":"Finance and mathematics student at Corvinus University of Budapest, founder of the Reador.art art community (600,000+ followers), building Readors Exped.","alumniOf":[{"@type":"CollegeOrUniversity","name":"Corvinus University of Budapest"}],"knowsLanguage":["hu","en"],"knowsAbout":["Painting","Graphic design","Finance","Mathematics","Statistics","Python","Web development","Community building"],"sameAs":["https://github.com/G-David-S","https://www.instagram.com/reador.art/"]}}</script>
 <link rel="icon" href="art/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -116,7 +117,7 @@ p{margin:0}
 
 /* sections */
 section{padding-top:96px}
-.label{display:flex;justify-content:space-between;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+.label{font-weight:500;display:flex;justify-content:space-between;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
   border-bottom:1px solid var(--line);padding-bottom:10px;margin:0 20px}
 
 /* WORK: list left, one calm preview panel right */
@@ -128,7 +129,8 @@ section{padding-top:96px}
 .row .meta{grid-column:2;color:var(--muted);font-size:13px}
 .row .soon-tag{color:var(--warm);font-weight:600}
 .row.on .t{color:var(--warm);transform:translateX(8px)}
-.row:focus-visible{outline:none}
+a:focus-visible,button:focus-visible,.row:focus-visible{outline:2px solid var(--warm);outline-offset:4px}
+.skip{position:fixed;left:12px;top:-60px;z-index:200;background:#ece7d6;color:#0a1313;padding:8px 14px;font-weight:600;text-decoration:none;transition:top .2s}.skip:focus{top:12px}
 .work:hover .row:not(.on){opacity:.45}
 .row .vis{display:none!important}
 .preview{position:sticky;top:40px;aspect-ratio:16/9;overflow:hidden;margin-top:24px}
@@ -205,6 +207,7 @@ section{padding-top:96px}
 </style>
 </head>
 <body>
+<a class="skip" href="#work">Skip to content</a>
 <div id="intro" aria-hidden="true"><small id="introName">Dávid Sámuel Gulyás</small><div class="pct" id="pct">0</div><div class="track"><div class="fill" id="fill"></div></div></div>
 
 <main id="top">
@@ -226,7 +229,7 @@ section{padding-top:96px}
     <div class="beam" id="beam" aria-hidden="true"></div>
     <canvas id="snow" aria-hidden="true"></canvas>
     <div class="fog" aria-hidden="true"></div>
-    <h1 class="name" id="name"><span id="n1">Dávid</span></h1>
+    <h1 class="name" id="name" aria-label="Dávid Sámuel Gulyás"><span id="n1">Dávid</span></h1>
     <div class="strip">
       <span class="sub" id="sub" data-t="sub">Sámuel Gulyás</span>
       <nav aria-label="Main"><a href="#work" data-t="nav_work">Work</a>, <a href="#about" data-t="nav_about">About</a></nav>
@@ -235,17 +238,17 @@ section{padding-top:96px}
   </div>
 
   <section id="work">
-    <div class="label"><span data-t="nav_work">Work</span><span>4</span></div>
+    <h2 class="label"><span data-t="nav_work">Work</span><span>4</span></h2>
     <div class="workwrap">
       <ul class="work" id="worklist">
-        <li><a class="row" href="https://github.com/G-David-S/readors-cards" target="_blank" rel="noopener">
+        <li><div class="row" tabindex="0">
           <span class="n">01</span><span class="t">Readors Exped</span>
-          <span class="meta" data-t="rc_meta">Card battle on my own painting · Game design · JavaScript</span>
+          <span class="meta"><span class="soon-tag" data-t="dev">In development</span> · <span data-t="rc_meta">Card battle on my own painting</span></span>
           <span class="vis"><span class="stack" aria-hidden="true">
             <img src="art/01-background.webp" alt=""><img src="art/02-trains.webp" alt=""><img src="art/03-train-station.webp" alt=""><img src="art/04-far-grass.webp" alt=""><img src="art/05-main-chracter-foot.webp" alt=""><img src="art/07-main-chracter.webp" alt=""><img src="art/08-enemie-captin.webp" alt=""><img src="art/10-cloak-in-front.webp" alt=""><img src="art/11-front-grass.webp" alt="">
           </span></span>
-        </a></li>
-        <li><a class="row" href="https://www.instagram.com/reador.art/" target="_blank" rel="noopener">
+        </div></li>
+        <li><a class="row" href="https://www.instagram.com/reador.art/" target="_blank" rel="noopener noreferrer">
           <span class="n">02</span><span class="t">Reador.art</span>
           <span class="meta" data-t="ra_meta">Art community · Founder since 2024</span>
           <span class="vis card c1"><span>@reador.art</span><b>600,000+</b></span>
@@ -266,7 +269,7 @@ section{padding-top:96px}
   </section>
 
   <section id="about">
-    <div class="label"><span data-t="nav_about">About</span><span>GDS</span></div>
+    <h2 class="label"><span data-t="nav_about">About</span><span>GDS</span></h2>
     <div class="about reveal">
       <p style="color:var(--muted);font-size:13px">Budapest</p>
       <p class="lead" data-t="lead">I turn <em>paintings into products</em>: a 600,000+ community, a game built on my own artwork, and the finance and maths to run the numbers.</p>
@@ -307,20 +310,20 @@ section{padding-top:96px}
   </section>
 
   <section id="contact" class="contact">
-    <div class="label"><span data-t="nav_contact">Contact</span><span>↓</span></div>
+    <h2 class="label"><span data-t="nav_contact">Contact</span><span>↓</span></h2>
     <a class="big js-mail" href="#contact" data-t="contact_big">Let's make something</a>
     <p class="copy" id="copy" aria-live="polite"></p>
     <div class="links">
       <a class="js-mail" href="#contact" data-t="email">Email</a>
-      <a href="https://github.com/G-David-S" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://www.instagram.com/reador.art/" target="_blank" rel="noopener">Instagram</a>
-      <a id="pdfLink" href="https://cv-gulyas-david.web.app/cv-gulyas-david-samuel.pdf" download data-t="pdf">CV (PDF)</a>
+      <a href="https://github.com/G-David-S" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://www.instagram.com/reador.art/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a id="pdfLink" href="cv-gulyas-david-samuel.pdf" download data-t="pdf">CV (PDF)</a>
     </div>
   </section>
 </main>
 
 <!-- the CV paper -->
-<a class="paper" id="paper" href="https://cv-gulyas-david.web.app/cv-gulyas-david-samuel.pdf" download aria-label="Download CV (PDF)">
+<a class="paper" id="paper" href="cv-gulyas-david-samuel.pdf" download aria-label="Download CV (PDF)">
   <span class="dl">PDF ↓</span>
   <div class="k">Curriculum Vitae · 2026</div>
   <h4>Dávid Sámuel Gulyás</h4>
@@ -345,7 +348,7 @@ section{padding-top:96px}
 <script>
 const HU={
  sub:"Gulyás Sámuel",nav_work:"Munkák",nav_about:"Rólam",nav_contact:"Kapcsolat",
- rc_meta:"Kártyacsata a saját festményemen · Játéktervezés · JavaScript",
+ rc_meta:"Kártyacsata a saját festményemen",dev:"Fejlesztés alatt",
  ra_meta:"Művészeti közösség · Alapító 2024 óta",
  soon:"Hamarosan",soon2:"Hamarosan",cafe_meta:"Kávézói értékelések, amiket írok és közzéteszek",
  lab_meta:"Politikai és gazdasági elemzés, kommentár, modellezés",
@@ -358,11 +361,11 @@ const HU={
 };
 const EN={};document.querySelectorAll("[data-t]").forEach(e=>EN[e.dataset.t]=e.innerHTML);
 let lang="en";const lb=document.getElementById("lang");
-const PDF={en:"https://cv-gulyas-david.web.app/cv-gulyas-david-samuel.pdf",hu:"https://cv-gulyas-david.web.app/cv-gulyas-david-samuel-hu.pdf"};
+const PDF={en:"cv-gulyas-david-samuel.pdf",hu:"cv-gulyas-david-samuel-hu.pdf"};
 function setLang(l){lang=l;const d=l==="hu"?HU:EN;
   document.querySelectorAll("[data-t]").forEach(e=>{if(d[e.dataset.t]!=null)e.innerHTML=d[e.dataset.t]});
   document.documentElement.lang=l;lb.textContent=l==="hu"?"EN":"HU";buildPreview();
-  document.getElementById("pdfLink").href=document.getElementById("paper").href=PDF[l];
+  document.getElementById("pdfLink").setAttribute("href",PDF[l]);document.getElementById("paper").setAttribute("href",PDF[l]);
   try{localStorage.setItem("lang",l)}catch(e){}}
 lb.onclick=()=>setLang(lang==="en"?"hu":"en");
 // theme switch is instant (no half-faded colours), then transitions come back
@@ -397,7 +400,7 @@ if(reduce||/still/.test(location.search)){open()}else{
 // All motion is transform-only, so it stays smooth.
 const hero=document.getElementById("hero"),beam=document.getElementById("beam");
 let tx=0,ty=0,cx=0,cy=0,tlx=.5,tly=.6,lx=.5,ly=.6,tsy=0,ssy=0,lastMove=-9999,visible=true,raf=0;
-hero.addEventListener("pointermove",e=>{const b=hero.getBoundingClientRect(),px=(e.clientX-b.left)/b.width,py=(e.clientY-b.top)/b.height;
+hero.addEventListener("pointermove",e=>{if(reduce)return;const b=hero.getBoundingClientRect(),px=(e.clientX-b.left)/b.width,py=(e.clientY-b.top)/b.height;
   tx=-(px-.5);ty=-(py-.5);tlx=px;tly=py;lastMove=performance.now()});
 const cv=document.getElementById("snow"),cc=cv.getContext("2d");let flakes=[],W=0,H=0,dpr=1;
 function sizeSnow(){dpr=Math.min(devicePixelRatio||1,2);W=hero.clientWidth;H=hero.clientHeight;cv.width=W*dpr;cv.height=H*dpr;
@@ -407,7 +410,7 @@ let prev=0;
 function frame(t){
   if(!visible){raf=0;return}
   const dt=Math.min((t-prev)/1000||.016,.05);prev=t;
-  if(t-lastMove>2500){tx=Math.sin(t/2900)*.42;ty=Math.cos(t/3700)*.25;tlx=.5+Math.sin(t/3300)*.26;tly=.55+Math.cos(t/4100)*.1}
+  if(!reduce&&t-lastMove>2500){tx=Math.sin(t/2900)*.42;ty=Math.cos(t/3700)*.25;tlx=.5+Math.sin(t/3300)*.26;tly=.55+Math.cos(t/4100)*.1}
   cx+=(tx-cx)*.06;cy+=(ty-cy)*.06;lx+=(tlx-lx)*.08;ly+=(tly-ly)*.08;ssy+=(tsy-ssy)*.12;
   for(const im of heroImgs){const d=im._d;
     im.style.transform="translate3d("+(cx*d).toFixed(2)+"px,"+(cy*d*.4-ssy*d).toFixed(2)+"px,0) translate(-50%,-50%) scale("+(1+ssy*d*.0014).toFixed(4)+")"}
@@ -422,7 +425,7 @@ raf=requestAnimationFrame(frame);
 
 // scroll: hero zoom, "Top" link, and the CV paper rising from the bottom
 const paper=document.getElementById("paper"),toTop=document.getElementById("toTop");let atEnd=false;
-function onScroll(){tsy=Math.min(Math.max(scrollY/innerHeight,0),1);
+function onScroll(){tsy=reduce?0:Math.min(Math.max(scrollY/innerHeight,0),1);
   toTop.classList.toggle("on",scrollY>innerHeight*.5);
   paper.classList.toggle("show",scrollY>innerHeight*.35);
   paper.classList.toggle("up",atEnd)}
