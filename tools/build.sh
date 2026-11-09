@@ -10,5 +10,7 @@ trap 'kill $SERVER' EXIT
 sleep 1
 "$CHROME" --headless=new --disable-gpu --no-pdf-header-footer --virtual-time-budget=6000 --print-to-pdf=public/cv-gulyas-david-samuel.pdf "http://localhost:8131/tools/cv-print.html?lang=en" 2>/dev/null
 "$CHROME" --headless=new --disable-gpu --no-pdf-header-footer --virtual-time-budget=6000 --print-to-pdf=public/cv-gulyas-david-samuel-hu.pdf "http://localhost:8131/tools/cv-print.html?lang=hu" 2>/dev/null
+"$CHROME" --headless=new --disable-gpu --no-pdf-header-footer --virtual-time-budget=9000 --print-to-pdf=public/cv-gulyas-david-samuel-art.pdf "http://localhost:8131/tools/cv-print.html?lang=en&art" 2>/dev/null
+"$CHROME" --headless=new --disable-gpu --no-pdf-header-footer --virtual-time-budget=9000 --print-to-pdf=public/cv-gulyas-david-samuel-hu-art.pdf "http://localhost:8131/tools/cv-print.html?lang=hu&art" 2>/dev/null
 "$CHROME" --headless=new --disable-gpu --hide-scrollbars --window-size=1200,630 --virtual-time-budget=9000 --screenshot=public/assets/preview.png "http://localhost:8131/public/index.html?still" 2>/dev/null
-echo "Done: both PDFs and public/assets/preview.png"
+echo "Done: four PDFs (plain + secret art edition) and public/assets/preview.png"

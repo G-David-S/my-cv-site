@@ -12,23 +12,39 @@ h2{font:700 8pt Montserrat;letter-spacing:.16em;text-transform:uppercase;color:#
 .i{margin:0 0 8px}.i b{font-weight:600}.i small{float:right;color:#2d6b73}.i p{margin:1px 0 1px 12px;text-indent:-12px}.i p::before{content:"→ ";color:#a8522b}
 .i .d{margin-left:0;text-indent:0;color:#4b6162}.i .d::before{content:""}
 .g{display:grid;grid-template-columns:1fr 1fr;gap:2px 16px}
-</style></head><body>
+
+.bg{display:none}
+body.art{color:#ece7d6;background:#0a1313;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body.art *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body.art .bg{display:block;position:fixed;inset:0;overflow:hidden;z-index:0}
+body.art .bg img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:50% 62%}
+body.art .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,19,19,.55) 0,rgba(10,19,19,.84) 24%,rgba(10,19,19,.88) 62%,rgba(10,19,19,.12) 100%)}
+body.art .wrap{position:relative;z-index:1}
+body.art h1{color:#ece7d6}body.art .sub{color:#e8b595}body.art .role,body.art .contact{color:#b9c4c2}
+body.art h2{color:#9fb3b2;border-bottom-color:rgba(236,231,214,.22)}
+body.art .i small{color:#8fc0c5}body.art .i .d{color:#b9c4c2}body.art .i p::before{color:#e8c070}
+body.art .note{position:fixed;left:15mm;bottom:10mm;z-index:1;font:600 7pt Montserrat;letter-spacing:.2em;text-transform:uppercase;color:#e8c070}
+.note{display:none}body.art .note{display:block}
+</style></head><body><div class="bg" id="bg"></div><div class="note">✦ Secret edition · Readors Exped</div><div class="wrap">
 <h1>Dávid</h1><div class="sub" id="sub"></div><div class="role" id="role"></div><div class="contact">gulyasdavid123@gmail.com · instagram.com/reador.art · github.com/G-David-S · cv-gulyas-david.web.app</div>
 <h2 id="h0"></h2><div id="lead"></div><h2 id="h1"></h2><div id="exp"></div><h2 id="h2"></h2><div id="edu"></div><h2 id="h3"></h2><div class="g" id="sk"></div>
-<script>
+</div><script>
 const D={en:{sub:"Sámuel Gulyás",role:"Painter · Finance & maths student · Builder",h:["Profile","Experience","Education","Skills"],
-lead:"I turn paintings into products: a 600,000+ community, a game built on my own artwork, and the finance and maths to run the numbers.",
+lead:["Painter: 600,000+ followers on Reador.art","Builder: a card game and sites made from my own artwork","Finance & maths at Corvinus"],
 exp:[["Reador.art · Founder","2024 – now",["Built an art community from zero to 600,000+ followers","Run on daily content and my own ROI metrics","Launched my own digital products"]],["Morgan Stanley Agentic Coding Class","2026 – now",["Directing AI coding agents to build ArAt and Readors Exped, from design to launch","Bringing real artists on board, built to pitch to investors"]],["Deep Creative Collective · Analytics & content intern","2023 – 2026",["Analysed campaign and content performance and turned it into reports","Planned and edited short-form video"]]],
-edu:[["Corvinus University of Budapest","2025 – now","Business Administration BSc · Specialised Finance & Mathematics (SPM)"],["Budapesti Innovatív Technikum","2023 – 2025","Business administration"],["Kreatív Technikum","2019 – 2023","Graphic design"]],
+edu:[["Corvinus University of Budapest","2025 – now",["Business Administration BSc","Specialised Finance & Mathematics (SPM)"]],["Budapesti Innovatív Technikum","2023 – 2025",["Business administration"]],["Kreatív Technikum","2019 – 2023",["Graphic design"]]],
 sk:["Painting & illustration","Graphic design, Adobe programs","Python, Excel & Sheets","Statistics & maths","Coding agents, HTML / CSS / JS, Firebase","Hungarian native · English C2"]},
 hu:{sub:"Gulyás Sámuel",role:"Festő · Pénzügy és matek szakos hallgató · Építő",h:["Profil","Tapasztalat","Tanulmányok","Készségek"],
-lead:"A festményeimből termékeket csinálok: 600 000+ fős közösség, a saját művemre épülő játék, és a pénzügyi és matematikai tudás, hogy a számok is kijöjjenek.",
+lead:["Festő: 600 000+ követő a Reador.art-on","Építő: saját művemre épülő kártyajáték és weboldalak","Pénzügy és matek a Corvinuson"],
 exp:[["Reador.art · Alapító","2024 óta",["Művészeti közösséget építettem a nulláról 600 000+ követőig","Napi tartalom és saját ROI-mutatók mentén működtetem","Saját digitális termékeket indítottam"]],["Morgan Stanley Agentic Coding kurzus","2026 óta",["AI kódoló ügynököket irányítok az ArAt és a Readors Exped megépítéséhez, a tervezéstől az indulásig","Valódi művészeket vonok be, befektetői bemutatóra építve"]],["Deep Creative Collective · Statisztikai és tartalomkészítő gyakornok","2023 – 2026",["Kampányok és tartalmak teljesítményét elemeztem, riportokká alakítottam","Rövid videókat terveztem és vágtam"]]],
-edu:[["Budapesti Corvinus Egyetem","2025 óta","Gazdálkodás és menedzsment BSc · Specializált Pénzügy és Matematika (SPM)"],["Budapesti Innovatív Technikum","2023 – 2025","Vállalkozási ügyviteli ügyintéző"],["Kreatív Technikum","2019 – 2023","Grafikai képzés"]],
+edu:[["Budapesti Corvinus Egyetem","2025 óta",["Gazdálkodás és menedzsment BSc","Pénzügy és Matematika (SPM)"]],["Budapesti Innovatív Technikum","2023 – 2025",["Vállalkozási ügyviteli ügyintéző"]],["Kreatív Technikum","2019 – 2023",["Grafikai képzés"]]],
 sk:["Festés és illusztráció","Grafikai tervezés, Adobe-programok","Python, Excel és Táblázatok","Statisztika és matek","Kódoló ügynökök, HTML / CSS / JS, Firebase","Magyar anyanyelv · Angol C2"]}};
+const art=/art/.test(location.search);
+if(art){document.body.classList.add("art");const st=document.createElement("style");st.textContent="@page{size:A4;margin:0} body{padding:14mm 15mm}";document.head.appendChild(st);
+ document.getElementById("bg").innerHTML=["01-background","02-trains","03-train-station","04-far-grass","05-main-chracter-foot","07-main-chracter","08-enemie-captin","10-cloak-in-front","11-front-grass"].map(n=>'<img src="../public/art/'+n+'.webp" alt="">').join("");}
 const d=D[/lang=hu/.test(location.search)?"hu":"en"],$=i=>document.getElementById(i);
-$("sub").textContent=d.sub;$("role").textContent=d.role;d.h.forEach((t,i)=>$("h"+i).textContent=t);$("lead").textContent=d.lead;
+$("sub").textContent=d.sub;$("role").textContent=d.role;d.h.forEach((t,i)=>$("h"+i).textContent=t);$("lead").innerHTML=`<div class="i">${d.lead.map(x=>`<p>${x}</p>`).join("")}</div>`;
 $("exp").innerHTML=d.exp.map(e=>`<div class="i"><small>${e[1]}</small><b>${e[0]}</b>${e[2].map(x=>`<p>${x}</p>`).join("")}</div>`).join("");
-$("edu").innerHTML=d.edu.map(e=>`<div class="i"><small>${e[1]}</small><b>${e[0]}</b><p class="d">${e[2]}</p></div>`).join("");
+$("edu").innerHTML=d.edu.map(e=>`<div class="i"><small>${e[1]}</small><b>${e[0]}</b>${e[2].map(x=>`<p class="d">${x}</p>`).join("")}</div>`).join("");
 $("sk").innerHTML=d.sk.map(x=>`<div>${x}</div>`).join("");
 </script></body></html>

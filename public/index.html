@@ -209,9 +209,6 @@ a:focus-visible,button:focus-visible,.row:focus-visible{outline:2px solid var(--
 .lead li{padding:2px 0 2px 1.1em;text-indent:-1.1em}.lead li::before{content:"→ ";color:var(--muted)}
 .lead em{font-style:normal;color:var(--warm)}
 /* easter egg: golden snowflakes */
-.sun{-webkit-mask-image:linear-gradient(to bottom,#000 50%,transparent 96%);mask-image:linear-gradient(to bottom,#000 50%,transparent 96%);position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 3s;background:radial-gradient(ellipse 95% 48% at 50% 80%,rgba(255,150,70,.55),rgba(255,170,90,.2) 55%,transparent 80%),linear-gradient(to bottom,rgba(255,150,100,.12),transparent 45%)}
-.dawn .sun{opacity:1}
-.dawn .beam{background:radial-gradient(circle,rgba(255,196,120,.4) 0,rgba(255,170,90,.13) 32%,transparent 62%)}
 .hint{position:absolute;left:20px;bottom:64px;z-index:4;font:500 12px/1.3 Montserrat;color:#f0d9a4;letter-spacing:.08em;opacity:0;transition:opacity .8s;pointer-events:none}
 .hint.on{opacity:.9}
 .eggcount{color:var(--warm);letter-spacing:.25em;font-size:13px}
@@ -233,8 +230,9 @@ a:focus-visible,button:focus-visible,.row:focus-visible{outline:2px solid var(--
 .eggcard .st b{color:#e8c070}
 .eggcard .cf{margin-top:auto;font:italic 500 3.6cqw/1.35 Montserrat;color:#b9c4c2}
 .eggbtns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.eggbtns button{font:600 13px Montserrat;padding:10px 16px;border:0;cursor:pointer;background:#ece7d6;color:#0a1313}
-.eggbtns button:hover{background:#e8c070}
+.eggtitle{font:700 12px Montserrat;letter-spacing:.22em;text-transform:uppercase;color:#e8c070}
+.eggbtns a,.eggbtns button{font:600 13px Montserrat;padding:10px 16px;border:0;cursor:pointer;background:#ece7d6;color:#0a1313}
+.eggbtns a,.eggbtns button{text-decoration:none;display:inline-block}.eggbtns a:hover,.eggbtns button:hover{background:#e8c070}
 </style>
 </head>
 <body>
@@ -260,7 +258,6 @@ a:focus-visible,button:focus-visible,.row:focus-visible{outline:2px solid var(--
     <div class="beam" id="beam" aria-hidden="true"></div>
     <canvas id="snow" aria-hidden="true"></canvas>
     <div class="fog" aria-hidden="true"></div>
-    <div class="sun" aria-hidden="true"></div>
     <h1 class="name" id="name" aria-label="Dávid Sámuel Gulyás"><span id="n1">Dávid</span></h1>
     <div class="hint" id="hint" aria-hidden="true" data-t="hint">✦ Something golden is falling. Catch it.</div>
     <div class="strip">
@@ -375,15 +372,16 @@ a:focus-visible,button:focus-visible,.row:focus-visible{outline:2px solid var(--
 
 <div class="egg" id="egg" hidden role="dialog" aria-modal="true" aria-label="Secret card">
   <div class="eggbox">
+    <div class="eggtitle" data-t="egg_title">✦ Secret CV unlocked</div>
     <div class="eggcard" id="eggcard">
       <div class="art" aria-hidden="true"><img src="art/01-background.webp" alt=""><img src="art/02-trains.webp" alt=""><img src="art/03-train-station.webp" alt=""><img src="art/04-far-grass.webp" alt=""><img src="art/05-main-chracter-foot.webp" alt=""><img src="art/07-main-chracter.webp" alt=""><img src="art/08-enemie-captin.webp" alt=""><img src="art/10-cloak-in-front.webp" alt=""><img src="art/11-front-grass.webp" alt=""></div>
       <div class="cn">Dávid</div>
       <div class="cs">Sámuel Gulyás</div>
       <div class="cr" data-t="egg_rare">★ Legendary · Painter-Builder</div>
-      <div class="st"><span data-t="egg_s1">Painting</span><b>9</b><span data-t="egg_s2">Maths</span><b>8</b><span data-t="egg_s3">Finance</span><b>8</b><span data-t="egg_s4">Snowflakes caught</span><b>5 / 5</b><span data-t="egg_s5">Coffee</span><b>∞</b></div>
+      <div class="st"><span data-t="egg_s1">Painting</span><b>9</b><span data-t="egg_s2">Maths</span><b>8</b><span data-t="egg_s3">Finance</span><b>10</b><span data-t="egg_s4">Snowflakes caught</span><b>5 / 5</b><span data-t="egg_s5">Coffee</span><b>∞</b></div>
       <div class="cf" data-t="egg_flav">Found in the snow, on the fifth golden flake.</div>
     </div>
-    <div class="eggbtns"><button id="eggSave" type="button" data-t="egg_save">Download card</button><button id="eggDawn" type="button" data-t="egg_dawn">Dawn on / off</button><button id="eggClose" type="button" data-t="egg_close">Close</button></div>
+    <div class="eggbtns"><button id="eggSave" type="button" data-t="egg_save">Download card</button><a class="eggcv" id="eggCv" href="cv-gulyas-david-samuel-art.pdf" download data-t="egg_cv">Download art CV (PDF)</a><button id="eggClose" type="button" data-t="egg_close">Close</button></div>
   </div>
 </div>
 <div class="dock">
@@ -405,15 +403,15 @@ const HU={
  exp:"<li><b>Reador.art · Alapító</b><span class=\"pt\">Művészeti közösséget építettem a nulláról 600 000+ követőig</span><span class=\"pt\">Napi tartalom és saját ROI-mutatók mentén működtetem</span><span class=\"pt\">Saját digitális termékeket indítottam</span><small>2024 óta</small></li><li><b>Morgan Stanley Agentic Coding kurzus</b><span class=\"pt\">AI kódoló ügynököket irányítok az ArAt és a Readors Exped megépítéséhez, a tervezéstől az indulásig</span><span class=\"pt\">Valódi művészeket vonok be, befektetői bemutatóra építve</span><small>2026 óta</small></li><li><b>Deep Creative Collective · Statisztikai és tartalomkészítő gyakornok</b><span class=\"pt\">Kampányok és tartalmak teljesítményét elemeztem, riportokká alakítottam</span><span class=\"pt\">Rövid videókat terveztem és vágtam</span><small>2023 – 2026</small></li>",
  edu:"<li><div class=\"uni\"><span class=\"logo\" role=\"img\" aria-label=\"Budapesti Corvinus Egyetem\"></span><div><b>Budapesti Corvinus Egyetem</b><span class=\"pt\">Gazdálkodás és menedzsment BSc</span><span class=\"pt\">Pénzügy és Matematika (SPM)</span><small>2025 óta</small></div></div></li><li><b>Budapesti Innovatív Technikum</b><span class=\"pt\">Vállalkozási ügyviteli ügyintéző</span><small>2023 – 2025</small></li><li><b>Kreatív Technikum</b><span class=\"pt\">Grafikai képzés</span><small>2019 – 2023</small></li>",
  skills:"<li class=\"grp\">Kreatív</li><li><i>~✎</i>Festés és illusztráció</li><li><i>[▲]</i>Grafikai tervezés</li><li><i>{Ai}</i>Adobe-programok</li><li class=\"grp\">Adat</li><li><i>&gt;_</i>Python</li><li><i>[#]</i>Excel és Táblázatok</li><li><i>Σ</i>Statisztika és matek</li><li class=\"grp\">Építés</li><li><i>&lt;/&gt;</i>Kódoló ügynökök, HTML / CSS / JS</li><li><i>(*)</i>Firebase</li><li class=\"grp\">Nyelvek</li><li><i>HU</i>Magyar, anyanyelv</li><li><i>EN</i>Angol, C2</li>",
- hint:"✦ Valami arany esik. Kapd el.",egg_rare:"★ Legendás · Festő-Építő",egg_s1:"Festés",egg_s2:"Matek",egg_s3:"Pénzügy",egg_s4:"Elkapott hópihe",egg_s5:"Kávé",egg_flav:"A hóban találtam, az ötödik arany pehelyen.",egg_save:"Kártya letöltése",egg_dawn:"Hajnal be / ki",egg_close:"Bezár",contact_big:"Alkossunk valamit",email:"E-mail",pdf:"Önéletrajz (PDF)"
+ hint:"✦ Valami arany esik. Kapd el.",egg_rare:"★ Legendás · Festő-Építő",egg_s1:"Festés",egg_s2:"Matek",egg_s3:"Pénzügy",egg_s4:"Elkapott hópihe",egg_s5:"Kávé",egg_flav:"A hóban találtam, az ötödik arany pehelyen.",egg_save:"Kártya letöltése",egg_cv:"Különleges önéletrajz (PDF)",egg_title:"✦ Titkos önéletrajz feloldva",egg_close:"Bezár",contact_big:"Alkossunk valamit",email:"E-mail",pdf:"Önéletrajz (PDF)"
 };
 const EN={};document.querySelectorAll("[data-t]").forEach(e=>EN[e.dataset.t]=e.innerHTML);
 let lang="en";const lb=document.getElementById("lang");
-const PDF={en:"cv-gulyas-david-samuel.pdf",hu:"cv-gulyas-david-samuel-hu.pdf"};
+const PDF={en:"cv-gulyas-david-samuel.pdf",hu:"cv-gulyas-david-samuel-hu.pdf"},PDFART={en:"cv-gulyas-david-samuel-art.pdf",hu:"cv-gulyas-david-samuel-hu-art.pdf"};
 function setLang(l){lang=l;const d=l==="hu"?HU:EN;
   document.querySelectorAll("[data-t]").forEach(e=>{if(d[e.dataset.t]!=null)e.innerHTML=d[e.dataset.t]});
   document.documentElement.lang=l;lb.textContent=l==="hu"?"EN":"HU";buildPreview();
-  document.getElementById("pdfLink").setAttribute("href",PDF[l]);document.getElementById("paper").setAttribute("href",PDF[l]);
+  document.getElementById("pdfLink").setAttribute("href",PDF[l]);document.getElementById("paper").setAttribute("href",PDF[l]);document.getElementById("eggCv").setAttribute("href",PDFART[l]);
   try{localStorage.setItem("lang",l)}catch(e){}}
 lb.onclick=()=>setLang(lang==="en"?"hu":"en");
 // theme switch is instant (no half-faded colours), then transitions come back
@@ -455,11 +453,11 @@ function sizeSnow(){dpr=Math.min(devicePixelRatio||1,2);W=hero.clientWidth;H=her
   const n=Math.round(Math.min(Math.max(W/13,34),110));flakes=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,r:.7+Math.random()*2.1,p:Math.random()*6.28}))}
 sizeSnow();addEventListener("resize",sizeSnow);
 
-// ---- Easter egg: catch 5 golden snowflakes -> dawn breaks and a collectible card appears
+// ---- Easter egg: catch 5 golden snowflakes -> a secret art CV and collectible card unlock
 const GOAL=5,eggCount=document.getElementById("eggCount"),eggBtn=document.getElementById("eggBtn"),egg=document.getElementById("egg"),hint=document.getElementById("hint");
 let eggFound=false;try{eggFound=localStorage.getItem("egg2")==="1"}catch(e){}
 let caught=0,gold=null,sparks=[],nextGold=0,ac=null,hintShown=false;
-if(eggFound){html.classList.add("dawn");eggBtn.hidden=false}
+if(eggFound)eggBtn.hidden=false
 function ping(n){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime;
   o.type="sine";o.frequency.setValueAtTime(660+n*110,t);o.frequency.exponentialRampToValueAtTime(1320+n*110,t+.12);
   g.gain.setValueAtTime(.05,t);g.gain.exponentialRampToValueAtTime(.0001,t+.28);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+.3)}catch(e){}}
@@ -471,14 +469,13 @@ function catchGold(){if(eggFound||!gold)return;burst(gold.x,gold.y,28,190);gold=
   nextGold=performance.now()+1800+Math.random()*2200;if(caught>=GOAL)finishEgg()}
 function finishEgg(){eggFound=true;try{localStorage.setItem("egg2","1")}catch(e){}
   for(let i=0;i<6;i++)setTimeout(()=>{burst(W*(.1+Math.random()*.8),H*(.15+Math.random()*.4),70,320);ping(i)},i*220);
-  html.classList.add("dawn");eggBtn.hidden=false;setTimeout(()=>{eggCount.hidden=true;showEgg()},1700)}
+  eggBtn.hidden=false;setTimeout(()=>{eggCount.hidden=true;showEgg()},1700)}
 let lastFocus=null;
 function showEgg(){lastFocus=document.activeElement;egg.hidden=false;document.getElementById("eggClose").focus()}
 function hideEgg(){egg.hidden=true;if(lastFocus&&lastFocus.focus)lastFocus.focus()}
 eggBtn.onclick=showEgg;document.getElementById("eggClose").onclick=hideEgg;
 egg.addEventListener("click",e=>{if(e.target===egg)hideEgg()});
 addEventListener("keydown",e=>{if(e.key==="Escape"&&!egg.hidden)hideEgg()});
-document.getElementById("eggDawn").onclick=()=>html.classList.toggle("dawn");
 document.getElementById("eggSave").onclick=async()=>{
   try{await document.fonts.load("800 40px Syne")}catch(e){}
   const c=document.createElement("canvas");c.width=840;c.height=1180;const x=c.getContext("2d"),hu=lang==="hu";
@@ -489,7 +486,7 @@ document.getElementById("eggSave").onclick=async()=>{
   x.fillStyle="#ece7d6";x.font="800 150px Syne,sans-serif";x.textBaseline="alphabetic";x.fillText("DÁVID",32,720);
   x.fillStyle="#e8b595";x.font="600 30px Montserrat,sans-serif";x.fillText("S Á M U E L   G U L Y Á S",36,775);
   x.fillStyle="#e8c070";x.font="700 26px Montserrat,sans-serif";x.fillText(hu?"★ LEGENDÁS · FESTŐ-ÉPÍTŐ":"★ LEGENDARY · PAINTER-BUILDER",36,845);
-  const rows=hu?[["Festés","9"],["Matek","8"],["Pénzügy","8"],["Elkapott hópihe","5 / 5"],["Kávé","∞"]]:[["Painting","9"],["Maths","8"],["Finance","8"],["Snowflakes caught","5 / 5"],["Coffee","∞"]];
+  const rows=hu?[["Festés","9"],["Matek","8"],["Pénzügy","10"],["Elkapott hópihe","5 / 5"],["Kávé","∞"]]:[["Painting","9"],["Maths","8"],["Finance","10"],["Snowflakes caught","5 / 5"],["Coffee","∞"]];
   x.strokeStyle="rgba(236,231,214,.25)";x.lineWidth=2;x.beginPath();x.moveTo(36,872);x.lineTo(804,872);x.stroke();
   rows.forEach((r,i)=>{x.font="600 30px Montserrat,sans-serif";x.fillStyle="#ece7d6";x.textAlign="left";x.fillText(r[0],36,915+i*44);x.fillStyle="#e8c070";x.textAlign="right";x.fillText(r[1],804,915+i*44)});
   x.textAlign="left";x.fillStyle="#b9c4c2";x.font="italic 500 27px Montserrat,sans-serif";x.fillText(hu?"A hóban találtam, az ötödik arany pehelyen.":"Found in the snow, on the fifth golden flake.",36,1148);
@@ -507,10 +504,10 @@ function frame(t){
     im.style.transform="translate3d("+(cx*d).toFixed(2)+"px,"+(cy*d*.4-ssy*d).toFixed(2)+"px,0) translate(-50%,-50%) scale("+(1+ssy*d*.0014).toFixed(4)+")"}
   beam.style.transform="translate3d("+(lx*W).toFixed(1)+"px,"+(ly*H).toFixed(1)+"px,0)";
   cc.setTransform(dpr,0,0,dpr,0,0);cc.clearRect(0,0,W,H);
-  if(!reduce){const warm=html.classList.contains("dawn");
+  if(!reduce){
     for(const f of flakes){f.p+=dt*(.6+f.r*.25);f.y+=dt*(14+f.r*13);f.x+=Math.sin(f.p)*dt*(10+f.r*6)+cx*f.r*dt*-40;
       if(f.y>H+6){f.y=-6;f.x=Math.random()*W}if(f.x<-6)f.x=W+6;if(f.x>W+6)f.x=-6;
-      cc.beginPath();cc.arc(f.x,f.y,f.r,0,6.283);cc.fillStyle=(warm?"rgba(255,226,180,":"rgba(236,244,242,")+(.22+f.r*.17).toFixed(2)+")";cc.fill()}}
+      cc.beginPath();cc.arc(f.x,f.y,f.r,0,6.283);cc.fillStyle="rgba(236,244,242,"+(.22+f.r*.17).toFixed(2)+")";cc.fill()}}
   if(!eggFound&&opened&&!gold&&t>nextGold){if(!nextGold)nextGold=t+3500;else spawnGold()}
   if(gold){gold.p+=dt*2.4;gold.y+=dt*gold.v;gold.x+=Math.sin(gold.p)*dt*46;
     if(gold.y>H+30){gold=null;nextGold=t+2500+Math.random()*2500}
