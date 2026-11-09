@@ -1,18 +1,22 @@
 # Status – my-cv-site (2026-11-09)
 
 ## Done
-- Rebuilt from scratch in the osply.co style (see README). Old version backed up on GitHub: branch + tag `old-version`.
-- Review fixes: skip link, real h2 headings, focus rings, reduced-motion respected, security headers + CSP in firebase.json, Readors Exped shown as "In development" (its repo is private, so no link).
-- Projects: Readors Exped, Reador.art, plus "Coming soon" rows for Café Notes (reviews) and Analysis Lab (political/economic analysis and modelling).
-- Reworded lead and bullet points (impact style, no invented numbers). PDFs rebuilt from tools/cv-print.html.
-- Live: https://cv-gulyas-david.web.app (Firebase) + GitHub Pages mirror.
+- Site rebuilt in the osply.co style: giant DÁVID over the layered painting (depth, mouse light, snow), work list with picture panel, bullet-point About, CV paper rising at the bottom. Night is the default; EN + HU.
+- Old version backed up on GitHub: branch + tag `old-version`.
+- Live: https://cv-gulyas-david.web.app (Firebase) + GitHub Pages mirror. Security headers + CSP in firebase.json; accessibility fixes done.
+- Easter egg: catch 5 golden snowflakes -> secret art-background CV (PDF, EN/HU) + collectible card (Maths 8, Finance 10). No colour-change/dawn effect (owner didn't want it).
+- Homework 4 resubmitted on vibecodingclass.hu (2026-11-09 22:18).
 
-- Easter egg: 5 golden snowflakes fall over the painting; catch them (click/tap) -> dawn breaks, collectible "Exped" card with Download. Night is the default theme.
+## Where we are
+- Everything committed, pushed and deployed. Readors Exped shows "In development" (private repo, no link). Café Notes and Analysis Lab are "Coming soon" rows.
 
 ## Next
-- Real numbers for the bullets (follower growth, ROI result, sales) when the owner has them.
-- Build the Café Notes and Analysis Lab pages when the owner is ready.
-- Check the intro and mouse effects on a real phone.
+- Real numbers for the bullets (follower growth, ROI, sales).
+- Look at intro + mouse effects on a real phone.
+- Retake the classroom screenshot if wanted (current one is pre-egg).
+
+## Later
+- Build the Café Notes and Analysis Lab pages; link Readors Exped when it has a public demo; add a photo.
 
 ## How to start
-- Preview server "cv-site" (port 8130). Add `?still` to the address to skip the intro.
+- Preview server "cv-site" (port 8130); add `?still` to skip the intro. After CV text changes: `sh tools/build.sh`, commit, push, `firebase deploy --only hosting --project cv-gulyas-david`.
